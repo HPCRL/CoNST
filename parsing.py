@@ -265,7 +265,7 @@ class NaryContraction:
                     dependence_edges.append((ind, ind_second))
         return dependence_edges
 
-    def fuse_loops(self):
+    def fuse_loops(self, workspace=True):
         if not self.is_binarized():
             self.binarize()
         index_map = {}
@@ -276,9 +276,9 @@ class NaryContraction:
         for thresh in range(1, 5):
             try:
                 next(run_solver(self.statements, [contr.get_loop_ids() for contr in self.statements], self.opdag(), [
-                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh))
+                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh, workspace))
                 return run_solver(self.statements, [contr.get_loop_ids() for contr in self.statements], self.opdag(), [
-                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh)
+                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh, workspace)
             except SolverError as _:
                 print(f"Did not work for {thresh}")
                 continue

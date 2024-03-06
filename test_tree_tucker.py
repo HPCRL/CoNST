@@ -17,7 +17,7 @@ statements = [BinaryContraction(IM2, I, M2), BinaryContraction(res1, IM2, M1)]
 contraction = NaryContraction(res1, [I, M1, M2])
 contraction.statements = statements
 print(contraction)
-gen = contraction.fuse_loops()
+gen = contraction.fuse_loops(workspace=False)
 fir = FusedIR(gen)
 fir.reduce_intermediates()
 print(fir)

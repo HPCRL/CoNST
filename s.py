@@ -47,7 +47,7 @@ class SolverError(Exception):
 
 #indices is set of loops surrounding each statement, really the hash values of SparseIndexs
 #indices_id_map is a dict{index_hash: SparseIndex}
-def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_threshold):
+def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_threshold, workspace):
     # constraint variables spos_0, spos_1, ... for topsort order
     spos = [Int("spos_%s" % i) for i in range(len(statements))]
     # constraints on the range of spos_*: 0 <= spos_* <= n-1
@@ -85,8 +85,6 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
         # this is so that we use atleast a 1D workspace - contractions are fast that way.
         if not statements[s].is_last() and statements[s].get_contraction_id() is not None:
             lpos_contraction += [lpos[s][statements[s].get_contraction_id()] < (len(indxs)-1)]
-        #elif statements[s].is_last() and statements[s].get_contraction_id() is not None:
-        #    lpos_contraction += [lpos[s][statements[s].get_contraction_id()] == (len(indxs)-1)]
         # add constraint to push small loop down
         for ind1 in indxs:
             for ind2 in indxs:
@@ -157,7 +155,9 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
 
     # put it all together
     all_constraints = spos_depend + spos_range + spos_unique + \
-        lpos_range + lpos_unique + lpos_absent + prod_cons_fusion +all_dpos_constraints + lpos_order_by_size + lpos_contraction
+        lpos_range + lpos_unique + lpos_absent + prod_cons_fusion +all_dpos_constraints + lpos_order_by_size
+    if workspace:
+        all_constraints += lpos_contraction
 
     # solve and print
     s = Solver()
