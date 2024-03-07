@@ -2,6 +2,13 @@ from typing import List, Dict
 from parsing import Tensor, SparseIndex, IntermediateResult
 import copy
 
+def get_includes():
+    header = ""
+    header +="#include \"taco.h\"\n"
+    header +="using namespace taco;\n"
+    header +="#include \"util.hpp\"\n"
+    return header
+
 
 class SparseContraction():
     def __init__(self, result: Tensor, operands: List[Tensor], iterands: List[SparseIndex], input_tensor_ordering: Dict[Tensor, List[SparseIndex]]):
@@ -129,6 +136,8 @@ class FusedIR:
         lhs = f"{self.final_result_tensor.emit_access(lhs_tensorder, varname=False)}"
         rhs = "*".join([t.emit_access((self.tensor_orders[t]
                                       if t in self.tensor_orders else None), varname=False) for t in filter(lambda t: t != self.final_result_tensor, self.og_tensors)])
+        # TODO remove before flight
+        print(f"rhs shapes: {self.tensor_orders}")
         return f"{lhs} += {rhs};"
 
     def lower_intermediate_tensors(self):
@@ -139,9 +148,19 @@ class FusedIR:
 
     def emit_taco_kernel(self, kernel_name, add_timing=True):
         all_indices = set([i for t in self.og_tensors for i in t.get_shape()])
-        header = f"void {kernel_name}(" + ", ".join(
-            ["Tensor<double> " + t.name for t in self.og_tensors]) + ") {"
+        stub_names = [f"Tensor<double> {t.name}_disk" for t in self.og_tensors]
+        header = f"void {kernel_name}(" + ", ".join(stub_names) + ") {"
         header += "\n".join([i.lower_to_taco() for i in all_indices])
+        # add transpose calls
+        for tens in self.og_tensors:
+            if tens in self.tensor_orders and self.tensor_orders[tens] != tens.get_shape():
+                old_shape = ", ".join([str(i) for i in tens.get_shape()])
+                new_shape = ", ".join([str(i)
+                                      for i in self.tensor_orders[tens]])
+                old_name = tens.name + "_disk"
+                header += f"Tensor<double> {tens.name} = getCSFOrder({old_name}, {{{old_shape}}}, {{{new_shape}}});\n"
+            else:
+                header += f"Tensor<double> {tens.name} = {tens.name}_disk;\n"
         header += self.lower_og_tensors()
         header += self.lower_intermediate_tensors()
         header += f"auto fused_ir = {self.lower_to_taco()};"
