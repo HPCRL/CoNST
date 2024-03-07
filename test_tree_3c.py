@@ -24,6 +24,10 @@ fir = FusedIR(gen)
 fir.reduce_intermediates()
 print(fir)
 print(fir.emit_taco_kernel("filter_fused"))
+with open("filter_fused.hpp", "w") as f:
+    f.write("#include \"taco.h\"\n")
+    f.write("using namespace taco;\n")
+    f.write(fir.emit_taco_kernel("filter_fused"))
 
 
 Int = Tensor("Int", [k, nu, mu])
@@ -40,3 +44,7 @@ fir = FusedIR(gen)
 fir.reduce_intermediates()
 print(fir)
 print(fir.emit_taco_kernel("nofilter_fused"))
+with open("nofilter_fused.hpp", "w") as f:
+    f.write("#include \"taco.h\"\n")
+    f.write("using namespace taco;\n")
+    f.write(fir.emit_taco_kernel("nofilter_fused"))

@@ -112,7 +112,7 @@ class IntermediateResult(Tensor):
 
     def lower_to_taco(self):
         # TODO replace the component type
-        return f"TensorVar {self.name} = TensorVar(" + "\"" + f"{self.name}"+"\"" + f", Type({self.name}.getComponentType(), "+"{"+self._generate_shape_str() + "}), " + "{" + self._generate_format_str() + "});"
+        return f"TensorVar {self.name} = TensorVar(" + "\"" + f"{self.name}"+"\"" + f", Type(Float64, "+"{"+self._generate_shape_str() + "}), " + "{" + self._generate_format_str() + "});"
 
 
 class MultExpr:
