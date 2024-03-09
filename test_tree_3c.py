@@ -24,7 +24,7 @@ fir = FusedIR(gen)
 fir.reduce_intermediates()
 print(fir)
 print(fir.emit_taco_kernel("filter_fused"))
-with open("filter_fused.hpp", "w") as f:
+with open("3c_filter_fused.hpp", "w") as f:
     f.write(get_includes())
     f.write(fir.emit_taco_kernel("filter_fused"))
 
@@ -41,6 +41,6 @@ fir = FusedIR(gen)
 fir.reduce_intermediates()
 print(fir)
 print(fir.emit_taco_kernel("nofilter_fused"))
-with open("nofilter_fused.hpp", "w") as f:
+with open("3c_nofilter_fused.hpp", "w") as f:
     f.write(get_includes())
     f.write(fir.emit_taco_kernel("nofilter_fused"))
