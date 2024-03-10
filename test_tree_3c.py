@@ -12,8 +12,8 @@ C = Tensor("C", [nu, i])
 Phat = Tensor("Phat", [mu, muhat])
 L = Tensor("L", [k, i])
 X = Tensor("X", [k, i, muhat])
-IntC = IntermediateResult(Int, C, [nu])
-IntCPhat = IntermediateResult(IntC, Phat, [mu])
+IntC = IntermediateResult(Int, C, [nu], const_shape="PAO")
+IntCPhat = IntermediateResult(IntC, Phat, [mu], const_shape="PAO")
 statements = [BinaryContraction(IntC, Int, C), BinaryContraction(
     IntCPhat, IntC, Phat), BinaryContraction(X, IntCPhat, L)]
 contraction = NaryContraction(X, [Int, C, Phat, L])
@@ -30,7 +30,7 @@ with open("3c_filter_fused.hpp", "w") as f:
 
 
 X_nofilter = Tensor("X_nofilter", [k, i, muhat])
-IntC = IntermediateResult(Int, C, [nu])
+IntC = IntermediateResult(Int, C, [nu], const_shape="PAO")
 statements = [BinaryContraction(IntC, Int, C),
               BinaryContraction(X_nofilter, IntC, Phat)]
 contraction = NaryContraction(X_nofilter, [Int, C, Phat])

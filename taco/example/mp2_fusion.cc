@@ -7,8 +7,9 @@
 #include <sys/stat.h>
 #include <taco/storage/file_io_tns.h>
 #include <vector>
-#include "filter_fused.hpp"
-#include "nofilter_fused.hpp"
+#include "3c_filter_fused.hpp"
+#include "3c_nofilter_fused.hpp"
+#include "util.hpp"
 
 using namespace taco;
 
@@ -17,10 +18,12 @@ using namespace taco;
 // const int PAO_HAT = 300;
 // const int AUX = 700;
 
-const int MO = 25;
-const int PAO = 75;
-const int PAO_HAT = 75;
-const int AUX = 175;
+//const int MO = 25;
+//const int PAO = 75;
+//const int PAO_HAT = 75;
+//const int AUX = 175;
+
+
 // void noncov_mp2_fused(Tensor<double> Int, Tensor<double> C, Tensor<double>
 // Phat,
 //                       Tensor<double> X, Tensor<double> L) {
@@ -116,7 +119,7 @@ void noncov_mp2_nary(Tensor<double> Int, Tensor<double> C, Tensor<double> Phat,
   std::chrono::duration<double, std::milli> elapsed = end - start;
   std::cout << "Time noncov_mp2_nary:  " << elapsed.count() << " ms "
             << std::endl;
-  // write("nary_3cint.tns", X);
+  //write("nary_3cint.tns", X);
 }
 
 // void nofilter_fused(Tensor<double> Int, Tensor<double> C, Tensor<double> X,
@@ -197,10 +200,11 @@ void nofilter_nary(Tensor<double> Int, Tensor<double> C, Tensor<double> X,
   std::chrono::duration<double, std::milli> elapsed = end - start;
   std::cout << "Time nofilter_nary:  " << elapsed.count() << " ms "
             << std::endl;
-  // write("data_3cent/X_nofilter_nary.tns", X);
+  //write("threec_int_nary.tns", X);
 }
 
 int main() {
+  source_env_vars_mp2(MO, PAO, PAO_HAT, AUX);
   // Tensor<double> Int("Int", {PAO, PAO, AUX}, {Dense, Sparse, Sparse});
   Tensor<double> Int = read("data_3cent_real/Int.tns", {Dense, Sparse, Sparse});
   Int.pack();
@@ -227,15 +231,19 @@ int main() {
   filter_fused(Int, C, Phat, X, L);
   // Tensor<double> X_unf("X", {PAO_HAT, AUX, MO}, {Dense, Sparse, Sparse});
   // noncov_mp2_unfused(Int, C, Phat, X_unf, L);
-  // Tensor<double> X_nary("X", {AUX, MO, PAO_HAT}, {Dense, Sparse, Sparse});
-  // noncov_mp2_nary(Int, C, Phat, X_nary, L);
-  Tensor<double> X_nofilter("X", {MO, AUX, PAO_HAT}, {Dense, Sparse, Sparse});
-  nofilter_fused(Int, C, X_nofilter, Phat);
-  // Tensor<double> X_nofilter_unf("X", {AUX, MO, PAO_HAT},
+  //Int = Int.transpose({2, 0, 1});
+  //C = C.transpose({1, 0});
+  //Tensor<double> X_nary("X", {AUX, MO, PAO_HAT}, {Dense, Sparse, Sparse});
+  //noncov_mp2_nary(Int, C, Phat, X_nary, L);
+  //Tensor<double> X_nofilter("X", {MO, AUX, PAO_HAT}, {Dense, Sparse, Sparse});
+  //nofilter_fused(Int, C, X_nofilter, Phat);
+  //Tensor<double> X_nofilter_unf("X", {AUX, MO, PAO_HAT},
+  //                              {Dense, Sparse, Sparse});
+  //nofilter_unfused(Int, C, X_nofilter_unf, Phat);
+  //Int = Int.transpose({2, 0, 1});
+  //C = C.transpose({1, 0});
+  //Tensor<double> X_nofilter_nary("X", {AUX, MO, PAO_HAT},
   //                               {Dense, Sparse, Sparse});
-  // nofilter_unfused(Int, C, X_nofilter_unf, Phat);
-  // Tensor<double> X_nofilter_nary("X", {AUX, MO, PAO_HAT},
-  //                                {Dense, Sparse, Sparse});
-  // nofilter_nary(Int, C, X_nofilter_nary, Phat);
+  //nofilter_nary(Int, C, X_nofilter_nary, Phat);
   return 0;
 }

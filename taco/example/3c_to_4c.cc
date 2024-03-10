@@ -14,10 +14,6 @@ using namespace taco;
 //const int MO = 100;
 //const int PAO_HAT = 300;
 //const int AUX = 700;
-const int MO = 25;
-const int PAO = 75;
-const int PAO_HAT = 75;
-const int AUX = 175;
 //void fused_3c_to_4c(Tensor<double> I1, Tensor<double> D, Tensor<double> Result,
 //                    Tensor<double> I2) {
 //  IndexVar nuhat("nuhat");
@@ -101,6 +97,7 @@ void unfused_3c_to_4c(Tensor<double> I1, Tensor<double> D,
 }
 
 int main() {
+    source_env_vars_mp2(MO, PAO, PAO_HAT, AUX);
   Tensor<double> I1("Int", {AUX, MO, PAO_HAT}, {Dense, Sparse, Sparse});
   I1 = read("data_3cent_real/threec_int.tns", {Dense, Sparse, Sparse});
   I1.pack();
@@ -114,7 +111,7 @@ int main() {
   D.pack();
   D.setName("D");
 
-  Tensor<double> Res("Res", {MO, PAO_HAT, MO, PAO_HAT},
+  Tensor<double> Res("Res", {PAO_HAT, MO, PAO_HAT, MO},
                      {Dense, Sparse, Sparse, Sparse});
   fused_3c_to_4c(I1, D, Res, I2);
 

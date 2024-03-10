@@ -81,11 +81,12 @@ class Tensor:
 
 
 class IntermediateResult(Tensor):
-    def __init__(self, left_tensor, right_tensor, contraction_indices: List[SparseIndex]):
+    def __init__(self, left_tensor, right_tensor, contraction_indices: List[SparseIndex], const_shape=""):
         self.name = left_tensor.name + right_tensor.name
         self.shape = set(left_tensor.shape).union(set(right_tensor.shape)).difference(
             set(contraction_indices))
         self.fused_shape = self.shape
+        self.const_shape = const_shape
 
     def fuse(self, indices: List[SparseIndex]):
         self.fused_shape = self.shape.difference(set(indices))
@@ -102,7 +103,10 @@ class IntermediateResult(Tensor):
         return self.get_varname() + "(" + ",".join([str(i) for i in fused_ordered_shape]) + ")"
 
     def _generate_shape_str(self):
-        return ",".join([str(s.get_span()) for s in self.fused_shape])
+        if self.const_shape != "":
+            return self.const_shape
+        else:
+            return ",".join([str(s.get_span()) for s in self.fused_shape])
 
     def _generate_format_str(self):
         return ",".join([f"taco::dense" for _ in self.fused_shape])

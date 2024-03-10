@@ -4,6 +4,7 @@ export TMPDIR=$PWD
 # To get the source code, export TMPDIR
 #g++ -g -std=c++17 -DTACO -fopenmp -I ../include -L ../build/lib mttkrp_exp.cc -ltaco -o mttkrp_exp
 #gdb mttkrp_exp
+source data_qc_small/env_vars.sh
 g++ -g -O3 -march=native -mtune=native -ffast-math -std=c++17 -DTACO -fopenmp -I ../include -I ../src/lower $1.cc -L ../build/lib -ltaco -o $1
 #g++ -O -g -std=c++17 -DTACO -fopenmp -I ../include -L ../build/lib $1.cc -ltaco -o $1
 #g++ -std=c++17 -DTACO -I ../include -L ../build/lib $1.cc -ltaco -o $1
