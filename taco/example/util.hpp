@@ -10,24 +10,31 @@ int PAO_HAT = -1;
 int AUX = -1;
 int Rank = -1;
 
-void source_env_vars_mp2(int &MO, int &PAO, int &PAO_HAT, int &AUX) {
-  std::string mo = std::getenv("MO");
-  std::string pao = std::getenv("PAO");
-  std::string pao_hat = std::getenv("PAO_HAT");
-  std::string aux = std::getenv("AUX");
-  if (mo != "") {
-    MO = std::stoi(mo);
-  }
-  if (pao != "") {
-    PAO = std::stoi(pao);
-  }
-  if (pao_hat != "") {
-    PAO_HAT = std::stoi(pao_hat);
-  }
-  if (aux != "") {
-    AUX = std::stoi(aux);
+std::string parseExperiment(std::string exp_size) {
+  if (exp_size == "small") {
+    MO = 25;
+    PAO = 75;
+    PAO_HAT = 75;
+    AUX = 175;
+    return "data_qc_small";
+  } else if (exp_size == "medium") {
+    MO = 100;
+    PAO = 300;
+    PAO_HAT = 300;
+    AUX = 700;
+    return "data_qc_med";
+  } else if (exp_size == "large") {
+    MO = 100;
+    PAO = 500;
+    PAO_HAT = 500;
+    AUX = 900;
+    return "data_qc_large";
+  } else {
+    std::cout << "Invalid experiment size" << std::endl;
+    return "";
   }
 }
+
 Tensor<double> getCSFOrder(Tensor<double> inp,
                            std::vector<IndexVar> currentOrder,
                            std::vector<IndexVar> newOrder) {
