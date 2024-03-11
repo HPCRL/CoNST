@@ -112,15 +112,14 @@ int main() {
     Tensor<double> M2("M2", {Rank, I1.getDimension(2)}, {Dense, Dense});
     generate_ones(M2);
 
-    //Tensor<double> R3("result_nary", {I1.getDimension(0), Rank},
-    //                  {Dense, Dense});
-    //mttkrp_nary(I1, M1, M2, R3);
+    Tensor<double> R1("result_fused", {I1.getDimension(0), Rank},
+                      {Dense, Dense});
+    Tensor<double> inp = I1.transpose({2, 0, 1});
+    mttkrp_fused1(inp, M1, R1, M2);
 
-    //Tensor<double> R1("result_fused", {I1.getDimension(0), Rank},
-    //                  {Dense, Dense});
-    //Tensor<double> inp = I1.transpose({2, 0, 1});
-    //mttkrp_fused1(inp, M1, R1, M2);
-
+    Tensor<double> R3("result_nary", {I1.getDimension(0), Rank},
+                      {Dense, Dense});
+    mttkrp_nary(I1, M1, M2, R3);
     Tensor<double> R2("result_unfused", {Rank, I1.getDimension(0)},
                       {Dense, Dense});
     mttkrp_unfused(I1, M2, R2, M1);
