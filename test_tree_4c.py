@@ -26,4 +26,4 @@ print(fir.emit_taco_kernel("3c_to_4c_fused"))
 
 with open("4c_fused.hpp", "w") as f:
     f.write(get_includes())
-    f.write(fir.emit_taco_kernel("fused_3c_to_4c"))
+    f.write(fir.emit_taco_kernel("const_3c_to_4c"))
