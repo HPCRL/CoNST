@@ -53,8 +53,8 @@ def get_data():
                     filter_method_time[words[2]] = float(words[3])
                 else:
                     nofilter_method_time[words[2]] = float(words[3])
-        filter_frame = filter_frame.concat(pd.DataFrame(filter_method_time, index=[2]))
-        nofilter_frame = nofilter_frame.concat(pd.DataFrame(nofilter_method_time, index=[2]))
+        filter_frame = pd.concat([filter_frame, pd.DataFrame(filter_method_time, index=[2])])
+        nofilter_frame = pd.concat([nofilter_frame, pd.DataFrame(nofilter_method_time, index=[2])])
     except FileNotFoundError:
         pass
     return filter_frame, nofilter_frame
