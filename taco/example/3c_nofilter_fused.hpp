@@ -1,7 +1,7 @@
 #include "taco.h"
 using namespace taco;
 #include "util.hpp"
-void nofilter_fused(Tensor<double> Int_disk, Tensor<double> C_disk,
+void nofilter_const(Tensor<double> Int_disk, Tensor<double> C_disk,
                     Tensor<double> X_nofilter_disk, Tensor<double> Phat_disk) {
   IndexVar i("i");
   IndexVar muhat("muhat");
@@ -31,6 +31,6 @@ void nofilter_fused(Tensor<double> Int_disk, Tensor<double> C_disk,
   X_nofilter.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time nofilter_fused:  " << elapsed.count() << " ms "
+  std::cout << "Time nofilter_const:  " << elapsed.count() << " ms "
             << std::endl;
 }

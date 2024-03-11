@@ -23,10 +23,10 @@ gen = contraction.fuse_loops()
 fir = FusedIR(gen)
 fir.reduce_intermediates()
 print(fir)
-print(fir.emit_taco_kernel("filter_fused"))
+print(fir.emit_taco_kernel("filter_const"))
 with open("3c_filter_fused.hpp", "w") as f:
     f.write(get_includes())
-    f.write(fir.emit_taco_kernel("filter_fused"))
+    f.write(fir.emit_taco_kernel("filter_const"))
 
 
 X_nofilter = Tensor("X_nofilter", [k, i, muhat])
@@ -40,7 +40,7 @@ gen = contraction.fuse_loops()
 fir = FusedIR(gen)
 fir.reduce_intermediates()
 print(fir)
-print(fir.emit_taco_kernel("nofilter_fused"))
+print(fir.emit_taco_kernel("nofilter_const"))
 with open("3c_nofilter_fused.hpp", "w") as f:
     f.write(get_includes())
-    f.write(fir.emit_taco_kernel("nofilter_fused"))
+    f.write(fir.emit_taco_kernel("nofilter_const"))
