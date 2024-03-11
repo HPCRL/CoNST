@@ -58,4 +58,4 @@ def get_data():
     except FileNotFoundError:
         pass
     return filter_frame, nofilter_frame
-
+get_data()
