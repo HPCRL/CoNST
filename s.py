@@ -85,6 +85,8 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
         # this is so that we use atleast a 1D workspace - contractions are fast that way.
         if not statements[s].is_last() and statements[s].get_contraction_id() is not None:
             lpos_contraction += [lpos[s][statements[s].get_contraction_id()] < (len(indxs)-1)]
+        elif statements[s].is_last() and statements[s].get_contraction_id() is not None:
+            lpos_contraction += [lpos[s][statements[s].get_contraction_id()] == (len(indxs)-1)]
         # add constraint to push small loop down
         for ind1 in indxs:
             for ind2 in indxs:

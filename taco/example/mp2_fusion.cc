@@ -145,7 +145,6 @@ int main(int argc, char *argv[]) {
   Tensor<double> C("C", {PAO, MO}, {Dense, Sparse});
   C = read(path_prefix + "/C.tns", {Dense, Sparse});
   Phat.pack();
-  // C = C.transpose({1, 0});
   C.setName("C");
 
   Tensor<double> X("X", {AUX, MO, PAO_HAT}, {Dense, Sparse, Sparse});
