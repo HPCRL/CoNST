@@ -1,0 +1,36 @@
+# Expression
+We need to run the TTMc expression, one for each dimension, so 3 per tensor since all tensors are 3d.
+
+For TTMc-mode1, expression is:
+
+ IM2(i, j, b) = I(i, j, k) * M2(b, k);                                                                                                                                                              
+ R(i, b, a) = IM2(i, j, b) * M1(a, j); 
+
+For TTMc-mode2, expression is:
+
+ IM2(i, j, b) = I(i, j, k) * M2(b, k);
+ R(j, b, a) = IM2(i, j, b) * M1(a, i);
+
+For TTMc-mode3, expression is:
+ IM2(i, k, b) = I(i, j, k) * M2(b, j);
+ R(k, b, a) = IM2(i, k, b) * M1(a, i);
+
+We will report one time measurement for each TTMc-mode for each tensor, so 3 times per tensor.
+
+# Data
+You will find the data in ~/data_frostt_sparta. There are 4 tensors, each 3 dimensional.
+I am adding the metadata first line so it runs okay with sparta.
+The matrices M1 and M2 have to be generated. I have written the code to do this given the shape of the tensor "I", using TACO.
+You can adapt this code. It is at ~/hpcrl_taco/example/ttmc.cc, lines 129 to 161.
+I'm not sure if the matrices should be written to disk, it will take really long. Ideally you can create them in memory and pass it on to SPARTA.
+
+
+
+mode 1
+((I*M)*N)
+
+mode 2
+((I*M)*X)
+
+mode 3
+((I*Y)*X)

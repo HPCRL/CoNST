@@ -1,0 +1,81 @@
+===========================
+config file: /home/yufan/HiParTI/benchmark/conf-x1.txt
+
+((I * M) * N)
+
+n 2
+n : 2
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+m 1 x 1 y 0
+m : 1
+x : 1
+y : 0
+
+t 1
+
+
+expression: ((I * M) * N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/hpcrl_taco/example/inp_scipy.tns
+var name: M
+var input file: /home/yufan/hpcrl_taco/example/m2.tns
+var name: N
+var input file: /home/yufan/hpcrl_taco/example/m1.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=1000x1000x1000 NNZ=20000000 DENSITY=2.000000e-02
+Average slice length (c): 20000.00 , 20000.00 , 20000.00
+COO-STORAGE=305.18 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=1000x50 NNZ=50000 DENSITY=1.000000e+00
+Average slice length (c): 50.00 , 1000.00
+COO-STORAGE=585.94 KiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 1.993562 s
+[Index Search]: 2.066091 s
+[Accumulation]: 20.572694 s
+[Writeback]: 0.231622 s
+[Output Sorting]: 5.045836 s
+[Total time]: 29.909805 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=1000x1000x50 NNZ=50000000 DENSITY=1.000000e+00
+Average slice length (c): 50000.00 , 50000.00 , 1000000.00
+COO-STORAGE=762.94 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=1000x50 NNZ=50000 DENSITY=1.000000e+00
+Average slice length (c): 50.00 , 1000.00
+COO-STORAGE=585.94 KiB
+
+Original Tensors: 
+cmode m 1
+x y 1 0
+[Input Processing]: 10.117044 s
+[Index Search]: 3.160281 s
+[Accumulation]: 22.701843 s
+[Writeback]: 0.010252 s
+[Output Sorting]: 0.224951 s
+[Total time]: 36.214371 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=1000x50x50 NNZ=2500000 DENSITY=1.000000e+00
+Average slice length (c): 2500.00 , 50000.00 , 50000.00
+COO-STORAGE=38.15 MiB
+

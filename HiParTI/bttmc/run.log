@@ -1,0 +1,880 @@
+
+--------------------------------------------
+tns_file: /home/yufan/data_frostt_sparta/nell-1.tns
+config_file_dir: /home/yufan/HiParTI/bttmc/
+bash_script_path: /home/yufan/HiParTI/bttmc/exp_x1.sh
+--------------------------------------------
+meta info  :  [3, 2902330, 2143368, 25495389]
+================ Start /home/yufan/data_frostt_sparta/nell-1.tns mode 1 ================
+generate_ttmc_dense_matrices_m done
+generate_ttmc_dense_matrices_n done
+sparta m1 -i /home/yufan/data_frostt_sparta/nell-1.tns -m /home/yufan/data_frostt_sparta/m.tns -n /home/yufan/data_frostt_sparta/n.tns
+['/home/yufan/data_frostt_sparta/nell-1.tns', '/home/yufan/data_frostt_sparta/m.tns', '/home/yufan/data_frostt_sparta/n.tns', '/home/yufan/HiParTI/bttmc/conf-m1.txt']
+The I is: /home/yufan/data_frostt_sparta/nell-1.tns
+M2 is: /home/yufan/data_frostt_sparta/m.tns
+M1 is: /home/yufan/data_frostt_sparta/n.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m1.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m1.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 2 y 1
+m : 1
+x : 2
+y : 1
+
+m 1 x 1 y 1
+m : 1
+x : 1
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/nell-1.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/m.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/n.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=2902330x2143368x25495389 NNZ=143599552 DENSITY=9.054155e-13
+Average slice length (c): 49.48 , 67.00 , 5.63
+COO-STORAGE=2.14 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=16x25495389 NNZ=407926224 DENSITY=1.000000e+00
+Average slice length (c): 25495389.00 , 16.00
+COO-STORAGE=4.56 GiB
+
+Original Tensors: 
+cmode m 1
+x y 2 1
+[Input Processing]: 37.329038 s
+[Index Search]: 60.974255 s
+[Accumulation]: 230.644770 s
+[Writeback]: 1.002407 s
+[Output Sorting]: 26.924475 s
+[Total time]: 356.874945 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=2902330x2143368x16 NNZ=277958672 DENSITY=2.792651e-06
+Average slice length (c): 95.77 , 129.68 , 17372417.00
+COO-STORAGE=4.14 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=16x2143368 NNZ=34293888 DENSITY=1.000000e+00
+Average slice length (c): 2143368.00 , 16.00
+COO-STORAGE=392.46 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 1
+[Input Processing]: 48.278072 s
+[Index Search]: 57.100263 s
+[Accumulation]: 535.809036 s
+[Writeback]: 2.499230 s
+[Output Sorting]: 73.610928 s
+[Total time]: 717.297528 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=2902330x16x16 NNZ=742996480 DENSITY=1.000000e+00
+Average slice length (c): 256.00 , 46437280.00 , 46437280.00
+COO-STORAGE=11.07 GiB
+
+
+================ Start /home/yufan/data_frostt_sparta/nell-1.tns mode 2 ================
+n_path: /home/yufan/data_frostt_sparta/n.tns
+The file /home/yufan/data_frostt_sparta/n.tns has been deleted.
+generate_ttmc_dense_matrices_x done
+sparta m2 -i /home/yufan/data_frostt_sparta/nell-1.tns -m /home/yufan/data_frostt_sparta/m.tns -x /home/yufan/data_frostt_sparta/x.tns
+The I is: /home/yufan/data_frostt_sparta/nell-1.tns
+M2 is: /home/yufan/data_frostt_sparta/m.tns
+M1 is: /home/yufan/data_frostt_sparta/x.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m2.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m2.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 2 y 1
+m : 1
+x : 2
+y : 1
+
+m 1 x 0 y 1
+m : 1
+x : 0
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/nell-1.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/m.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/x.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=2902330x2143368x25495389 NNZ=143599552 DENSITY=9.054155e-13
+Average slice length (c): 49.48 , 67.00 , 5.63
+COO-STORAGE=2.14 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=16x25495389 NNZ=407926224 DENSITY=1.000000e+00
+Average slice length (c): 25495389.00 , 16.00
+COO-STORAGE=4.56 GiB
+
+Original Tensors: 
+cmode m 1
+x y 2 1
+[Input Processing]: 37.217647 s
+[Index Search]: 61.098613 s
+[Accumulation]: 230.684229 s
+[Writeback]: 0.994507 s
+[Output Sorting]: 26.761049 s
+[Total time]: 356.756045 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=2902330x2143368x16 NNZ=277958672 DENSITY=2.792651e-06
+Average slice length (c): 95.77 , 129.68 , 17372417.00
+COO-STORAGE=4.14 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=16x2902330 NNZ=46437280 DENSITY=1.000000e+00
+Average slice length (c): 2902330.00 , 16.00
+COO-STORAGE=531.43 MiB
+
+Original Tensors: 
+cmode m 1
+x y 0 1
+[Input Processing]: 65.995563 s
+[Index Search]: 50.637113 s
+[Accumulation]: 409.042088 s
+[Writeback]: 1.859554 s
+[Output Sorting]: 52.819497 s
+[Total time]: 580.353815 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=2143368x16x16 NNZ=548702208 DENSITY=1.000000e+00
+Average slice length (c): 256.00 , 34293888.00 , 34293888.00
+COO-STORAGE=8.18 GiB
+
+
+================ Start /home/yufan/data_frostt_sparta/nell-1.tns mode 3 ================
+The file /home/yufan/data_frostt_sparta/m.tns has been deleted.
+generate_ttmc_dense_matrices_y done
+sparta m3 -i /home/yufan/data_frostt_sparta/nell-1.tns -x /home/yufan/data_frostt_sparta/x.tns -y /home/yufan/data_frostt_sparta/y.tns
+Traceback (most recent call last):
+  File "/home/yufan/HiParTI/bttmc/generate_tns_scipy.py", line 176, in <module>
+    call_sparta_m3(tns_file, x_path, y_path, config_file, bash_script_path)
+  File "/home/yufan/HiParTI/bttmc/generate_tns_scipy.py", line 104, in call_sparta_m3
+    result = subprocess.run(['bash', bash_script_path] + script_arguments, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+  File "/home/yufan/miniconda3/lib/python3.8/subprocess.py", line 512, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bash', '/home/yufan/HiParTI/bttmc/exp_x1.sh', '/home/yufan/data_frostt_sparta/nell-1.tns', '/home/yufan/data_frostt_sparta/y.tns', '/home/yufan/data_frostt_sparta/x.tns', '/home/yufan/HiParTI/bttmc/conf-m3.txt']' returned non-zero exit status 137.
+
+--------------------------------------------
+tns_file: /home/yufan/data_frostt_sparta/nell-2.tns
+config_file_dir: /home/yufan/HiParTI/bttmc/
+bash_script_path: /home/yufan/HiParTI/bttmc/exp_x1.sh
+--------------------------------------------
+meta info  :  [3, 12092, 9184, 28818]
+================ Start /home/yufan/data_frostt_sparta/nell-2.tns mode 1 ================
+generate_ttmc_dense_matrices_m done
+generate_ttmc_dense_matrices_n done
+sparta m1 -i /home/yufan/data_frostt_sparta/nell-2.tns -m /home/yufan/data_frostt_sparta/m.tns -n /home/yufan/data_frostt_sparta/n.tns
+['/home/yufan/data_frostt_sparta/nell-2.tns', '/home/yufan/data_frostt_sparta/m.tns', '/home/yufan/data_frostt_sparta/n.tns', '/home/yufan/HiParTI/bttmc/conf-m1.txt']
+The I is: /home/yufan/data_frostt_sparta/nell-2.tns
+M2 is: /home/yufan/data_frostt_sparta/m.tns
+M1 is: /home/yufan/data_frostt_sparta/n.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m1.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m1.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 2 y 1
+m : 1
+x : 2
+y : 1
+
+m 1 x 1 y 1
+m : 1
+x : 1
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/nell-2.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/m.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/n.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=12092x9184x28818 NNZ=76879419 DENSITY=2.402239e-05
+Average slice length (c): 6357.87 , 8371.02 , 2667.76
+COO-STORAGE=1.15 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x28818 NNZ=1440900 DENSITY=1.000000e+00
+Average slice length (c): 28818.00 , 50.00
+COO-STORAGE=16.49 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 1
+[Input Processing]: 7.857993 s
+[Index Search]: 7.953950 s
+[Accumulation]: 40.535316 s
+[Writeback]: 0.061328 s
+[Output Sorting]: 1.502364 s
+[Total time]: 57.910951 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=12092x9184x50 NNZ=16868250 DENSITY=3.037876e-03
+Average slice length (c): 1394.99 , 1836.70 , 337365.00
+COO-STORAGE=257.39 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x9184 NNZ=459200 DENSITY=1.000000e+00
+Average slice length (c): 9184.00 , 50.00
+COO-STORAGE=5.26 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 1
+[Input Processing]: 2.923352 s
+[Index Search]: 1.503685 s
+[Accumulation]: 13.912157 s
+[Writeback]: 0.107395 s
+[Output Sorting]: 2.709992 s
+[Total time]: 21.156580 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=12092x50x50 NNZ=30230000 DENSITY=1.000000e+00
+Average slice length (c): 2500.00 , 604600.00 , 604600.00
+COO-STORAGE=461.27 MiB
+
+
+================ Start /home/yufan/data_frostt_sparta/nell-2.tns mode 2 ================
+n_path: /home/yufan/data_frostt_sparta/n.tns
+The file /home/yufan/data_frostt_sparta/n.tns has been deleted.
+generate_ttmc_dense_matrices_x done
+sparta m2 -i /home/yufan/data_frostt_sparta/nell-2.tns -m /home/yufan/data_frostt_sparta/m.tns -x /home/yufan/data_frostt_sparta/x.tns
+The I is: /home/yufan/data_frostt_sparta/nell-2.tns
+M2 is: /home/yufan/data_frostt_sparta/m.tns
+M1 is: /home/yufan/data_frostt_sparta/x.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m2.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m2.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 2 y 1
+m : 1
+x : 2
+y : 1
+
+m 1 x 0 y 1
+m : 1
+x : 0
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/nell-2.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/m.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/x.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=12092x9184x28818 NNZ=76879419 DENSITY=2.402239e-05
+Average slice length (c): 6357.87 , 8371.02 , 2667.76
+COO-STORAGE=1.15 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x28818 NNZ=1440900 DENSITY=1.000000e+00
+Average slice length (c): 28818.00 , 50.00
+COO-STORAGE=16.49 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 1
+[Input Processing]: 7.890065 s
+[Index Search]: 7.722934 s
+[Accumulation]: 40.913432 s
+[Writeback]: 0.061053 s
+[Output Sorting]: 1.511079 s
+[Total time]: 58.098563 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=12092x9184x50 NNZ=16868250 DENSITY=3.037876e-03
+Average slice length (c): 1394.99 , 1836.70 , 337365.00
+COO-STORAGE=257.39 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x12092 NNZ=604600 DENSITY=1.000000e+00
+Average slice length (c): 12092.00 , 50.00
+COO-STORAGE=6.92 MiB
+
+Original Tensors: 
+cmode m 1
+x y 0 1
+[Input Processing]: 3.447597 s
+[Index Search]: 1.427956 s
+[Accumulation]: 12.558371 s
+[Writeback]: 0.082565 s
+[Output Sorting]: 2.025974 s
+[Total time]: 19.542463 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=9184x50x50 NNZ=22960000 DENSITY=1.000000e+00
+Average slice length (c): 2500.00 , 459200.00 , 459200.00
+COO-STORAGE=350.34 MiB
+
+
+================ Start /home/yufan/data_frostt_sparta/nell-2.tns mode 3 ================
+The file /home/yufan/data_frostt_sparta/m.tns has been deleted.
+generate_ttmc_dense_matrices_y done
+sparta m3 -i /home/yufan/data_frostt_sparta/nell-2.tns -x /home/yufan/data_frostt_sparta/x.tns -y /home/yufan/data_frostt_sparta/y.tns
+The I is: /home/yufan/data_frostt_sparta/nell-2.tns
+M2 is: /home/yufan/data_frostt_sparta/y.tns
+M1 is: /home/yufan/data_frostt_sparta/x.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m3.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m3.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 1 y 1
+m : 1
+x : 1
+y : 1
+
+m 1 x 0 y 1
+m : 1
+x : 0
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/nell-2.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/y.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/x.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=12092x9184x28818 NNZ=76879419 DENSITY=2.402239e-05
+Average slice length (c): 6357.87 , 8371.02 , 2667.76
+COO-STORAGE=1.15 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x9184 NNZ=459200 DENSITY=1.000000e+00
+Average slice length (c): 9184.00 , 50.00
+COO-STORAGE=5.26 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 1
+[Input Processing]: 14.961922 s
+[Index Search]: 20.803235 s
+[Accumulation]: 289.030892 s
+[Writeback]: 3.635829 s
+[Output Sorting]: 119.921365 s
+[Total time]: 448.353244 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=12092x28818x50 NNZ=1074171800 DENSITY=6.165123e-02
+Average slice length (c): 88833.26 , 37274.34 , 21483436.00
+COO-STORAGE=16.01 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x12092 NNZ=604600 DENSITY=1.000000e+00
+Average slice length (c): 12092.00 , 50.00
+COO-STORAGE=6.92 MiB
+
+Original Tensors: 
+cmode m 1
+x y 0 1
+[Input Processing]: 259.367551 s
+[Index Search]: 74.273993 s
+[Accumulation]: 496.587810 s
+[Writeback]: 0.244769 s
+[Output Sorting]: 7.451695 s
+[Total time]: 837.925819 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=28818x50x50 NNZ=72045000 DENSITY=1.000000e+00
+Average slice length (c): 2500.00 , 1440900.00 , 1440900.00
+COO-STORAGE=1.07 GiB
+
+
+Cleaning up...
+The file /home/yufan/data_frostt_sparta/x.tns has been deleted.
+The file /home/yufan/data_frostt_sparta/y.tns has been deleted.
+================ Done /home/yufan/data_frostt_sparta/nell-2.tns ================
+
+--------------------------------------------
+tns_file: /home/yufan/data_frostt_sparta/flickr-3d.tns
+config_file_dir: /home/yufan/HiParTI/bttmc/
+bash_script_path: /home/yufan/HiParTI/bttmc/exp_x1.sh
+--------------------------------------------
+meta info  :  [3, 319686, 28153045, 1607191]
+================ Start /home/yufan/data_frostt_sparta/flickr-3d.tns mode 1 ================
+generate_ttmc_dense_matrices_m done
+generate_ttmc_dense_matrices_n done
+sparta m1 -i /home/yufan/data_frostt_sparta/flickr-3d.tns -m /home/yufan/data_frostt_sparta/m.tns -n /home/yufan/data_frostt_sparta/n.tns
+['/home/yufan/data_frostt_sparta/flickr-3d.tns', '/home/yufan/data_frostt_sparta/m.tns', '/home/yufan/data_frostt_sparta/n.tns', '/home/yufan/HiParTI/bttmc/conf-m1.txt']
+The I is: /home/yufan/data_frostt_sparta/flickr-3d.tns
+M2 is: /home/yufan/data_frostt_sparta/m.tns
+M1 is: /home/yufan/data_frostt_sparta/n.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m1.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m1.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 2 y 1
+m : 1
+x : 2
+y : 1
+
+m 1 x 1 y 1
+m : 1
+x : 1
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/flickr-3d.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/m.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/n.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=319686x28153045x1607191 NNZ=112890310 DENSITY=7.804412e-12
+Average slice length (c): 353.13 , 4.01 , 70.24
+COO-STORAGE=1.68 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=16x1607191 NNZ=25715056 DENSITY=1.000000e+00
+Average slice length (c): 1607191.00 , 16.00
+COO-STORAGE=294.29 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 1
+[Input Processing]: 12.921408 s
+[Index Search]: 29.448852 s
+[Accumulation]: 314.990793 s
+[Writeback]: 1.534720 s
+[Output Sorting]: 48.146101 s
+[Total time]: 407.041873 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=319686x28153045x16 NNZ=450448720 DENSITY=3.128069e-06
+Average slice length (c): 1409.03 , 16.00 , 28153045.00
+COO-STORAGE=6.71 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=16x28153045 NNZ=450448720 DENSITY=1.000000e+00
+Average slice length (c): 28153045.00 , 16.00
+COO-STORAGE=5.03 GiB
+
+Original Tensors: 
+cmode m 1
+x y 1 1
+[Input Processing]: 108.005008 s
+[Index Search]: 38.916164 s
+[Accumulation]: 136.918521 s
+[Writeback]: 0.273171 s
+[Output Sorting]: 8.025397 s
+[Total time]: 292.138261 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=319686x16x16 NNZ=81839616 DENSITY=1.000000e+00
+Average slice length (c): 256.00 , 5114976.00 , 5114976.00
+COO-STORAGE=1.22 GiB
+
+
+================ Start /home/yufan/data_frostt_sparta/flickr-3d.tns mode 2 ================
+n_path: /home/yufan/data_frostt_sparta/n.tns
+The file /home/yufan/data_frostt_sparta/n.tns has been deleted.
+generate_ttmc_dense_matrices_x done
+sparta m2 -i /home/yufan/data_frostt_sparta/flickr-3d.tns -m /home/yufan/data_frostt_sparta/m.tns -x /home/yufan/data_frostt_sparta/x.tns
+Traceback (most recent call last):
+  File "/home/yufan/HiParTI/bttmc/generate_tns_scipy.py", line 167, in <module>
+    call_sparta_m2(tns_file, m_path, x_path, config_file, bash_script_path)
+  File "/home/yufan/HiParTI/bttmc/generate_tns_scipy.py", line 93, in call_sparta_m2
+    result = subprocess.run(['bash', bash_script_path] + script_arguments, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+  File "/home/yufan/miniconda3/lib/python3.8/subprocess.py", line 512, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bash', '/home/yufan/HiParTI/bttmc/exp_x1.sh', '/home/yufan/data_frostt_sparta/flickr-3d.tns', '/home/yufan/data_frostt_sparta/m.tns', '/home/yufan/data_frostt_sparta/x.tns', '/home/yufan/HiParTI/bttmc/conf-m2.txt']' returned non-zero exit status 137.
+
+
+
+--------------------------------------------
+tns_file: /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns
+config_file_dir: /home/yufan/HiParTI/bttmc/
+bash_script_path: /home/yufan/HiParTI/bttmc/exp_x1.sh
+--------------------------------------------
+meta info  :  [3, 165427, 11374, 2]
+================ Start /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns mode 1 ================
+generate_ttmc_dense_matrices_m done
+generate_ttmc_dense_matrices_n done
+sparta m1 -i /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns -m /home/yufan/data_frostt_sparta/m.tns -n /home/yufan/data_frostt_sparta/n.tns
+['/home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns', '/home/yufan/data_frostt_sparta/m.tns', '/home/yufan/data_frostt_sparta/n.tns', '/home/yufan/HiParTI/bttmc/conf-m1.txt']
+The I is: /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns
+M2 is: /home/yufan/data_frostt_sparta/m.tns
+M1 is: /home/yufan/data_frostt_sparta/n.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m1.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m1.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 2 y 1
+m : 1
+x : 2
+y : 1
+
+m 1 x 1 y 1
+m : 1
+x : 1
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/m.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/n.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=165427x11374x2 NNZ=26021854 DENSITY=6.914943e-03
+Average slice length (c): 157.30 , 2287.84 , 13010927.00
+COO-STORAGE=397.06 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x2 NNZ=100 DENSITY=1.000000e+00
+Average slice length (c): 2.00 , 50.00
+COO-STORAGE=1.17 KiB
+
+Original Tensors: 
+cmode m 1
+x y 2 1
+[Input Processing]: 2.240512 s
+[Index Search]: 19.956886 s
+[Accumulation]: 314.703016 s
+[Writeback]: 4.384537 s
+[Output Sorting]: 142.541977 s
+[Total time]: 483.826928 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=165427x11374x50 NNZ=1301092700 DENSITY=1.382989e-02
+Average slice length (c): 7865.06 , 114391.83 , 26021854.00
+COO-STORAGE=19.39 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x11374 NNZ=568700 DENSITY=1.000000e+00
+Average slice length (c): 11374.00 , 50.00
+COO-STORAGE=6.51 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 1
+[Input Processing]: 246.366606 s
+[Index Search]: 88.154533 s
+[Accumulation]: 622.042309 s
+[Writeback]: 1.394649 s
+[Output Sorting]: 40.422036 s
+[Total time]: 998.380133 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=165427x50x50 NNZ=413567500 DENSITY=1.000000e+00
+Average slice length (c): 2500.00 , 8271350.00 , 8271350.00
+COO-STORAGE=6.16 GiB
+
+
+================ Start /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns mode 2 ================
+n_path: /home/yufan/data_frostt_sparta/n.tns
+The file /home/yufan/data_frostt_sparta/n.tns has been deleted.
+generate_ttmc_dense_matrices_x done
+sparta m2 -i /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns -m /home/yufan/data_frostt_sparta/m.tns -x /home/yufan/data_frostt_sparta/x.tns
+The I is: /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns
+M2 is: /home/yufan/data_frostt_sparta/m.tns
+M1 is: /home/yufan/data_frostt_sparta/x.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m2.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m2.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 2 y 1
+m : 1
+x : 2
+y : 1
+
+m 1 x 0 y 1
+m : 1
+x : 0
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/m.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/x.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=165427x11374x2 NNZ=26021854 DENSITY=6.914943e-03
+Average slice length (c): 157.30 , 2287.84 , 13010927.00
+COO-STORAGE=397.06 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x2 NNZ=100 DENSITY=1.000000e+00
+Average slice length (c): 2.00 , 50.00
+COO-STORAGE=1.17 KiB
+
+Original Tensors: 
+cmode m 1
+x y 2 1
+[Input Processing]: 2.245561 s
+[Index Search]: 19.871422 s
+[Accumulation]: 313.320989 s
+[Writeback]: 4.352432 s
+[Output Sorting]: 133.800947 s
+[Total time]: 473.591351 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=165427x11374x50 NNZ=1301092700 DENSITY=1.382989e-02
+Average slice length (c): 7865.06 , 114391.83 , 26021854.00
+COO-STORAGE=19.39 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x165427 NNZ=8271350 DENSITY=1.000000e+00
+Average slice length (c): 165427.00 , 50.00
+COO-STORAGE=94.66 MiB
+
+Original Tensors: 
+cmode m 1
+x y 0 1
+[Input Processing]: 320.518242 s
+[Index Search]: 82.220106 s
+[Accumulation]: 546.929294 s
+[Writeback]: 0.095464 s
+[Output Sorting]: 2.575527 s
+[Total time]: 952.338633 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=11374x50x50 NNZ=28435000 DENSITY=1.000000e+00
+Average slice length (c): 2500.00 , 568700.00 , 568700.00
+COO-STORAGE=433.88 MiB
+
+
+================ Start /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns mode 3 ================
+The file /home/yufan/data_frostt_sparta/m.tns has been deleted.
+generate_ttmc_dense_matrices_y done
+sparta m3 -i /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns -x /home/yufan/data_frostt_sparta/x.tns -y /home/yufan/data_frostt_sparta/y.tns
+The I is: /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns
+M2 is: /home/yufan/data_frostt_sparta/y.tns
+M1 is: /home/yufan/data_frostt_sparta/x.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m3.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m3.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 1 y 1
+m : 1
+x : 1
+y : 1
+
+m 1 x 0 y 1
+m : 1
+x : 0
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/y.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/x.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=165427x11374x2 NNZ=26021854 DENSITY=6.914943e-03
+Average slice length (c): 157.30 , 2287.84 , 13010927.00
+COO-STORAGE=397.06 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x11374 NNZ=568700 DENSITY=1.000000e+00
+Average slice length (c): 11374.00 , 50.00
+COO-STORAGE=6.51 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 1
+[Input Processing]: 2.717069 s
+[Index Search]: 2.095693 s
+[Accumulation]: 14.610846 s
+[Writeback]: 0.049729 s
+[Output Sorting]: 1.105766 s
+[Total time]: 20.579103 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=165427x2x50 NNZ=13175250 DENSITY=7.964389e-01
+Average slice length (c): 79.64 , 6587625.00 , 263505.00
+COO-STORAGE=201.04 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=50x165427 NNZ=8271350 DENSITY=1.000000e+00
+Average slice length (c): 165427.00 , 50.00
+COO-STORAGE=94.66 MiB
+
+Original Tensors: 
+cmode m 1
+x y 0 1
+[Input Processing]: 3.726715 s
+[Index Search]: 0.862123 s
+[Accumulation]: 6.251280 s
+[Writeback]: 0.000010 s
+[Output Sorting]: 0.000338 s
+[Total time]: 10.840465 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=2x50x50 NNZ=5000 DENSITY=1.000000e+00
+Average slice length (c): 2500.00 , 100.00 , 100.00
+COO-STORAGE=78.12 KiB
+
+
+Cleaning up...
+The file /home/yufan/data_frostt_sparta/x.tns has been deleted.
+The file /home/yufan/data_frostt_sparta/y.tns has been deleted.
+================ Done /home/yufan/data_frostt_sparta/vast-2015-mc1-3d.tns ================

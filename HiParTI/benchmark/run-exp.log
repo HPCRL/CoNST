@@ -1,0 +1,810 @@
+===========================
+config file: /home/yufan/HiParTI/benchmark/conf-t1.txt
+
+(P * (I * C))
+
+n 2
+n : 2
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+m 1 x 1 y 0
+m : 1
+x : 1
+y : 0
+
+t 1
+
+
+expression: (P * (I * C))
+
+n: 2
+t: 1
+input_file_num: 3
+var name: P
+var input file: /home/yufan/data_3cent_realmid_sparta/Phat.tns
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/Intt.tns
+var name: C
+var input file: /home/yufan/data_3cent_realmid_sparta/C.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x700x300 NNZ=21470400 DENSITY=3.408000e-01
+Average slice length (c): 71568.00 , 30672.00 , 71568.00
+COO-STORAGE=327.61 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100 NNZ=7032 DENSITY=2.344000e-01
+Average slice length (c): 23.44 , 70.32
+COO-STORAGE=82.41 KiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 2.201897 s
+[Index Search]: 1.493925 s
+[Accumulation]: 8.198244 s
+[Writeback]: 0.075300 s
+[Output Sorting]: 1.494410 s
+[Total time]: 13.463775 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x300 NNZ=89820 DENSITY=9.980000e-01
+Average slice length (c): 299.40 , 299.40
+COO-STORAGE=1.03 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x700x100 NNZ=16287600 DENSITY=7.756000e-01
+Average slice length (c): 54292.00 , 23268.00 , 162876.00
+COO-STORAGE=248.53 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 0
+[Input Processing]: 0.420662 s
+[Index Search]: 0.022289 s
+[Accumulation]: 50.947603 s
+[Writeback]: 0.085278 s
+[Output Sorting]: 3.845696 s
+[Total time]: 55.321527 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x700x100 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 70000.00 , 30000.00 , 210000.00
+COO-STORAGE=320.43 MiB
+
+===========t1-2================
+config file: /home/yufan/HiParTI/benchmark/conf-t1-2.txt
+
+((C*I)*P)
+
+n 2
+n : 2
+
+m 1 x 1 y 0
+m : 1
+x : 1
+y : 0
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+t 1
+
+
+expression: ((C*I)*P)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: P
+var input file: /home/yufan/data_3cent_realmid_sparta/Phatt.tns
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/Intt.tns
+var name: C
+var input file: /home/yufan/data_3cent_realmid_sparta/Ct.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300 NNZ=7032 DENSITY=2.344000e-01
+Average slice length (c): 70.32 , 23.44
+COO-STORAGE=82.41 KiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x700x300 NNZ=21470400 DENSITY=3.408000e-01
+Average slice length (c): 71568.00 , 30672.00 , 71568.00
+COO-STORAGE=327.61 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 0
+[Input Processing]: 0.533866 s
+[Index Search]: 0.002790 s
+[Accumulation]: 20.991983 s
+[Writeback]: 0.075977 s
+[Output Sorting]: 3.252654 s
+[Total time]: 24.857270 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x700x300 NNZ=16287600 DENSITY=7.756000e-01
+Average slice length (c): 162876.00 , 23268.00 , 54292.00
+COO-STORAGE=248.53 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x300 NNZ=89820 DENSITY=9.980000e-01
+Average slice length (c): 299.40 , 299.40
+COO-STORAGE=1.03 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 1.492940 s
+[Index Search]: 1.220306 s
+[Accumulation]: 35.581265 s
+[Writeback]: 0.085180 s
+[Output Sorting]: 1.927803 s
+[Total time]: 40.307495 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x700x300 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 210000.00 , 30000.00 , 70000.00
+COO-STORAGE=320.43 MiB
+
+===========t2-1================
+config file: /home/yufan/HiParTI/benchmark/conf-t2-1.txt
+
+((I * D) * Z)
+
+n 2
+n : 2
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+t 1
+
+
+expression: ((I * D) * Z)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c1.tns
+var name: D
+var input file: /home/yufan/data_3cent_realmid_sparta/D.tns
+var name: Z
+var input file: /home/yufan/data_3cent_realmid_sparta/threec_int.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x700 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 3220.00 , 9660.00 , 1380.00
+COO-STORAGE=14.74 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x700 NNZ=490000 DENSITY=1.000000e+00
+Average slice length (c): 700.00 , 700.00
+COO-STORAGE=5.61 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 0.096605 s
+[Index Search]: 0.118024 s
+[Accumulation]: 6.554101 s
+[Writeback]: 0.097745 s
+[Output Sorting]: 2.142037 s
+[Total time]: 9.008512 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x700 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 70000.00 , 210000.00 , 30000.00
+COO-STORAGE=320.43 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x100x300 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 1380.00 , 9660.00 , 3220.00
+COO-STORAGE=14.74 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 2.302401 s
+[Index Search]: 2.340441 s
+[Accumulation]: 295.659289 s
+[Writeback]: 4.095972 s
+[Output Sorting]: 174.333865 s
+[Total time]: 478.731968 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x100x300 NNZ=900000000 DENSITY=1.000000e+00
+Average slice length (c): 3000000.00 , 9000000.00 , 9000000.00 , 3000000.00
+COO-STORAGE=16.76 GiB
+
+============t2-2===============
+config file: /home/yufan/HiParTI/benchmark/conf-t2-2.txt
+
+((I * D) * Z)
+
+n 2
+n : 2
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+t 1
+
+
+expression: ((I * D) * Z)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c1.tns
+var name: D
+var input file: /home/yufan/data_3cent_realmid_sparta/D.tns
+var name: Z
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c3.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x700 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 3220.00 , 9660.00 , 1380.00
+COO-STORAGE=14.74 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x700 NNZ=490000 DENSITY=1.000000e+00
+Average slice length (c): 700.00 , 700.00
+COO-STORAGE=5.61 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 0.097807 s
+[Index Search]: 0.119226 s
+[Accumulation]: 6.508582 s
+[Writeback]: 0.097061 s
+[Output Sorting]: 1.909287 s
+[Total time]: 8.731964 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x700 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 70000.00 , 210000.00 , 30000.00
+COO-STORAGE=320.43 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x300x100 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 1380.00 , 3220.00 , 9660.00
+COO-STORAGE=14.74 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 1.926511 s
+[Index Search]: 2.372495 s
+[Accumulation]: 334.406383 s
+[Writeback]: 4.075770 s
+[Output Sorting]: 168.838878 s
+[Total time]: 511.620038 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x300x100 NNZ=900000000 DENSITY=1.000000e+00
+Average slice length (c): 3000000.00 , 9000000.00 , 3000000.00 , 9000000.00
+COO-STORAGE=16.76 GiB
+
+============t2-3===============
+config file: /home/yufan/HiParTI/benchmark/conf-t2-3.txt
+
+((I * D) * Z)
+
+n 2
+n : 2
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+t 1
+
+
+expression: ((I * D) * Z)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c2.tns
+var name: D
+var input file: /home/yufan/data_3cent_realmid_sparta/D.tns
+var name: Z
+var input file: /home/yufan/data_3cent_realmid_sparta/threec_int.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x700 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 9660.00 , 3220.00 , 1380.00
+COO-STORAGE=14.74 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x700 NNZ=490000 DENSITY=1.000000e+00
+Average slice length (c): 700.00 , 700.00
+COO-STORAGE=5.61 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 0.096597 s
+[Index Search]: 0.114263 s
+[Accumulation]: 5.961341 s
+[Writeback]: 0.097205 s
+[Output Sorting]: 1.983731 s
+[Total time]: 8.253136 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x700 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 210000.00 , 70000.00 , 30000.00
+COO-STORAGE=320.43 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x100x300 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 1380.00 , 9660.00 , 3220.00
+COO-STORAGE=14.74 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 2.038907 s
+[Index Search]: 2.314579 s
+[Accumulation]: 293.917987 s
+[Writeback]: 4.098194 s
+[Output Sorting]: 176.599862 s
+[Total time]: 478.969529 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x100x300 NNZ=900000000 DENSITY=1.000000e+00
+Average slice length (c): 9000000.00 , 3000000.00 , 9000000.00 , 3000000.00
+COO-STORAGE=16.76 GiB
+
+============t2-4===============
+config file: /home/yufan/HiParTI/benchmark/conf-t2-4.txt
+
+((I * D) * Z)
+
+n 2
+n : 2
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+t 1
+
+
+expression: ((I * D) * Z)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c2.tns
+var name: D
+var input file: /home/yufan/data_3cent_realmid_sparta/D.tns
+var name: Z
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c3.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x700 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 9660.00 , 3220.00 , 1380.00
+COO-STORAGE=14.74 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x700 NNZ=490000 DENSITY=1.000000e+00
+Average slice length (c): 700.00 , 700.00
+COO-STORAGE=5.61 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 0.100308 s
+[Index Search]: 0.118283 s
+[Accumulation]: 6.455505 s
+[Writeback]: 0.097691 s
+[Output Sorting]: 1.934537 s
+[Total time]: 8.706325 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x700 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 210000.00 , 70000.00 , 30000.00
+COO-STORAGE=320.43 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x300x100 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 1380.00 , 3220.00 , 9660.00
+COO-STORAGE=14.74 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 1.982192 s
+[Index Search]: 2.416676 s
+[Accumulation]: 334.267906 s
+[Writeback]: 4.101179 s
+[Output Sorting]: 171.355565 s
+[Total time]: 514.123517 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x300x100 NNZ=900000000 DENSITY=1.000000e+00
+Average slice length (c): 9000000.00 , 3000000.00 , 3000000.00 , 9000000.00
+COO-STORAGE=16.76 GiB
+
+============t2-5===============
+config file: /home/yufan/HiParTI/benchmark/conf-t2-5.txt
+
+(Z*(D*I))
+
+n 2
+n : 2
+
+m 1 x 1 y 0
+m : 1
+x : 1
+y : 0
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+t 1
+
+
+expression: (Z*(D*I))
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/threec_int.tns
+var name: D
+var input file: /home/yufan/data_3cent_realmid_sparta/Dt.tns
+var name: Z
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c1.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x700 NNZ=490000 DENSITY=1.000000e+00
+Average slice length (c): 700.00 , 700.00
+COO-STORAGE=5.61 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x100x300 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 1380.00 , 9660.00 , 3220.00
+COO-STORAGE=14.74 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 0
+[Input Processing]: 0.062579 s
+[Index Search]: 0.080352 s
+[Accumulation]: 7.148808 s
+[Writeback]: 0.097945 s
+[Output Sorting]: 3.434133 s
+[Total time]: 10.823818 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x700 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 3220.00 , 9660.00 , 1380.00
+COO-STORAGE=14.74 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x100x300 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 30000.00 , 210000.00 , 70000.00
+COO-STORAGE=320.43 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 0.620095 s
+[Index Search]: 2.057621 s
+[Accumulation]: 332.924344 s
+[Writeback]: 4.138401 s
+[Output Sorting]: 176.473433 s
+[Total time]: 516.213895 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x100x300 NNZ=900000000 DENSITY=1.000000e+00
+Average slice length (c): 3000000.00 , 9000000.00 , 9000000.00 , 3000000.00
+COO-STORAGE=16.76 GiB
+
+============t2-6===============
+config file: /home/yufan/HiParTI/benchmark/conf-t2-6.txt
+
+(Z*(D*I))
+
+n 2
+n : 2
+
+m 1 x 1 y 0
+m : 1
+x : 1
+y : 0
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+t 1
+
+
+expression: (Z*(D*I))
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/threec_int.tns
+var name: D
+var input file: /home/yufan/data_3cent_realmid_sparta/Dt.tns
+var name: Z
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c2.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x700 NNZ=490000 DENSITY=1.000000e+00
+Average slice length (c): 700.00 , 700.00
+COO-STORAGE=5.61 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x100x300 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 1380.00 , 9660.00 , 3220.00
+COO-STORAGE=14.74 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 0
+[Input Processing]: 0.061447 s
+[Index Search]: 0.078247 s
+[Accumulation]: 7.074265 s
+[Writeback]: 0.099536 s
+[Output Sorting]: 3.550555 s
+[Total time]: 10.864050 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x700 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 9660.00 , 3220.00 , 1380.00
+COO-STORAGE=14.74 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x100x300 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 30000.00 , 210000.00 , 70000.00
+COO-STORAGE=320.43 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 0.623005 s
+[Index Search]: 1.959766 s
+[Accumulation]: 331.139801 s
+[Writeback]: 4.109720 s
+[Output Sorting]: 183.304053 s
+[Total time]: 521.136345 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x100x300 NNZ=900000000 DENSITY=1.000000e+00
+Average slice length (c): 9000000.00 , 3000000.00 , 9000000.00 , 3000000.00
+COO-STORAGE=16.76 GiB
+
+============t2-7===============
+config file: /home/yufan/HiParTI/benchmark/conf-t2-7.txt
+
+(Z*(D*I))
+
+n 2
+n : 2
+
+m 1 x 1 y 0
+m : 1
+x : 1
+y : 0
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+t 1
+
+
+expression: (Z*(D*I))
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c3.tns
+var name: D
+var input file: /home/yufan/data_3cent_realmid_sparta/Dt.tns
+var name: Z
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c2.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x700 NNZ=490000 DENSITY=1.000000e+00
+Average slice length (c): 700.00 , 700.00
+COO-STORAGE=5.61 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x300x100 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 1380.00 , 3220.00 , 9660.00
+COO-STORAGE=14.74 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 0
+[Input Processing]: 0.063705 s
+[Index Search]: 0.055072 s
+[Accumulation]: 7.655734 s
+[Writeback]: 0.098138 s
+[Output Sorting]: 3.442293 s
+[Total time]: 11.314943 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x700 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 9660.00 , 3220.00 , 1380.00
+COO-STORAGE=14.74 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x300x100 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 30000.00 , 70000.00 , 210000.00
+COO-STORAGE=320.43 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 0.622581 s
+[Index Search]: 1.406030 s
+[Accumulation]: 311.895126 s
+[Writeback]: 4.128119 s
+[Output Sorting]: 177.226639 s
+[Total time]: 495.278495 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=100x300x300x100 NNZ=900000000 DENSITY=1.000000e+00
+Average slice length (c): 9000000.00 , 3000000.00 , 3000000.00 , 9000000.00
+COO-STORAGE=16.76 GiB
+
+============t2-8===============
+config file: /home/yufan/HiParTI/benchmark/conf-t2-8.txt
+
+(Z*(D*I))
+
+n 2
+n : 2
+
+m 1 x 1 y 0
+m : 1
+x : 1
+y : 0
+
+m 1 x 2 y 0
+m : 1
+x : 2
+y : 0
+
+t 1
+
+
+expression: (Z*(D*I))
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c3.tns
+var name: D
+var input file: /home/yufan/data_3cent_realmid_sparta/Dt.tns
+var name: Z
+var input file: /home/yufan/data_3cent_realmid_sparta/int3c1.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x700 NNZ=490000 DENSITY=1.000000e+00
+Average slice length (c): 700.00 , 700.00
+COO-STORAGE=5.61 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x300x100 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 1380.00 , 3220.00 , 9660.00
+COO-STORAGE=14.74 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 0
+[Input Processing]: 0.063186 s
+[Index Search]: 0.055487 s
+[Accumulation]: 7.390549 s
+[Writeback]: 0.098824 s
+[Output Sorting]: 3.454965 s
+[Total time]: 11.063010 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x700 NNZ=966000 DENSITY=4.600000e-02
+Average slice length (c): 3220.00 , 9660.00 , 1380.00
+COO-STORAGE=14.74 MiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=700x300x100 NNZ=21000000 DENSITY=1.000000e+00
+Average slice length (c): 30000.00 , 70000.00 , 210000.00
+COO-STORAGE=320.43 MiB
+
+Original Tensors: 
+cmode m 1
+x y 2 0
+[Input Processing]: 0.613815 s
+[Index Search]: 0.333632 s
+[Accumulation]: 313.635407 s
+[Writeback]: 4.100546 s
+[Output Sorting]: 173.253443 s
+[Total time]: 491.936843 s
+
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=300x100x300x100 NNZ=900000000 DENSITY=1.000000e+00
+Average slice length (c): 3000000.00 , 9000000.00 , 3000000.00 , 9000000.00
+COO-STORAGE=16.76 GiB
+

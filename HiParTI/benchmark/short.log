@@ -1,0 +1,30 @@
+config file: /home/yufan/HiParTI/benchmark/conf-t1.txt
+[Total time]: 13.463775 s
+[Total time]: 55.321527 s
+config file: /home/yufan/HiParTI/benchmark/conf-t1-2.txt
+[Total time]: 24.857270 s
+[Total time]: 40.307495 s
+config file: /home/yufan/HiParTI/benchmark/conf-t2-1.txt
+[Total time]: 9.008512 s
+[Total time]: 478.731968 s
+config file: /home/yufan/HiParTI/benchmark/conf-t2-2.txt
+[Total time]: 8.731964 s
+[Total time]: 511.620038 s
+config file: /home/yufan/HiParTI/benchmark/conf-t2-3.txt
+[Total time]: 8.253136 s
+[Total time]: 478.969529 s
+config file: /home/yufan/HiParTI/benchmark/conf-t2-4.txt
+[Total time]: 8.706325 s
+[Total time]: 514.123517 s
+config file: /home/yufan/HiParTI/benchmark/conf-t2-5.txt
+[Total time]: 10.823818 s
+[Total time]: 516.213895 s
+config file: /home/yufan/HiParTI/benchmark/conf-t2-6.txt
+[Total time]: 10.864050 s
+[Total time]: 521.136345 s
+config file: /home/yufan/HiParTI/benchmark/conf-t2-7.txt
+[Total time]: 11.314943 s
+[Total time]: 495.278495 s
+config file: /home/yufan/HiParTI/benchmark/conf-t2-8.txt
+[Total time]: 11.063010 s
+[Total time]: 491.936843 s
