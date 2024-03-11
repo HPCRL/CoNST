@@ -4,12 +4,12 @@ import pandas as pd
 import matplotlib.patches
 from matplotlib.legend_handler import HandlerTuple
 from matplotlib.ticker import ScalarFormatter
-from process_log import get_data_3c
+from process_log import get_data_4c
 
 FONTSIZE=15
 
 
-def make_graph(nofilter_frame, name="nofilter"):
+def make_graph(nofilter_frame):
     # relative speedup
     m1_t = nofilter_frame
     # make a new pandas frame by dividing each element of m1_t by the corresponding element of m1_t['const']
@@ -90,11 +90,10 @@ def make_graph(nofilter_frame, name="nofilter"):
 
     plt.show()
 
-    fig.savefig(f'mp2_{name}.pdf')
+    fig.savefig(f'mp2_4c.pdf')
 
 
 if __name__ == "__main__":
     # execute only if run as a script
-    filter_frame, nofilter_frame = get_data_3c()
-    make_graph(nofilter_frame, "nofilter")
-    make_graph(filter_frame, "filter")
+    filter_frame = get_data_4c()
+    make_graph(filter_frame)
