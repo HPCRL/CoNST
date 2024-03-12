@@ -33,7 +33,6 @@ def make_graph(nofilter_frame):
 
     #hatch_dict = {'const': '', 'TACO Unfused': 'xx', 'TACO N-ary': '++', 'Sparta': '...'}
     hatch_dict = {'const': '', 'SparseLNR': '////', 'TACO-unfused': 'xx', 'TACO-Nary': '++', 'Sparta': '...'}
-    #labels = ['const', 'TACO Unfused', 'TACO N-ary', 'Sparta']
     labels = ['const', 'SparseLNR', 'TACO-unfused', 'TACO-Nary', 'Sparta']
     colors = {'TACO-Nary': 'red', 'SparseLNR': 'greenyellow', 'const':'#FF7722', 'TACO-unfused': 'dodgerblue', 'Sparta': 'yellow'}
 

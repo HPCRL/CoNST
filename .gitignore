@@ -1,2 +1,4 @@
 taco/build
 taco/.cache
+*.pdf
+*.txt
