@@ -99,6 +99,7 @@ int main(int argc, char *argv[]) {
   // std::string path = argv[1];
   for (auto file : std::filesystem::directory_iterator(
            std::filesystem::current_path() / "data_frostt/")) {
+    std::cout << "****** Running " << file << "********" << std::endl;
     Tensor<double> I1 = read(file.path(), Format({Dense, Sparse, Sparse}));
     // Tensor<double> I1 = read("inp_scipy.tns", {Dense, Sparse, Sparse});
     I1.pack();

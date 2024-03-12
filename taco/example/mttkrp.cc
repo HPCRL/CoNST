@@ -42,7 +42,7 @@ void mttkrp_fused1(Tensor<double> I, Tensor<double> M1, Tensor<double> R,
   R.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time mttkrp_fused1:  " << elapsed.count() << " ms "
+  std::cout << "Time mttkrp1_const:  " << elapsed.count() << " ms "
             << std::endl;
   // write("nell1-1_fused.tns", R);
 }
@@ -60,7 +60,7 @@ void mttkrp_nary(Tensor<double> I, Tensor<double> M1, Tensor<double> M2,
   R.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time mttkrp_nary:  " << elapsed.count() << " ms " << std::endl;
+  std::cout << "Time mttkrp1_TACO-Nary:  " << elapsed.count() << " ms " << std::endl;
   // write("nell1-1_nary.tns", R);
 }
 
@@ -83,7 +83,7 @@ void mttkrp_unfused(Tensor<double> I, Tensor<double> M2, Tensor<double> R,
   R.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time mttkrp_unfused:  " << elapsed.count() << " ms "
+  std::cout << "Time mttkrp1_TACO-unfused:  " << elapsed.count() << " ms "
             << std::endl;
 }
 void generate_ones(Tensor<double> &out) {
