@@ -114,7 +114,7 @@ def get_data_4c():
 def get_data_mttkrp():
     # maps each tensor name to a pandas frame. Each frame has the time taken by each method for each mode. Order is mode1, mode2, mode3
     tensor_frame_dict = {}
-    for tname in ["nell-1", "nell-2", "flickr-3d", "vast-2015-mc1-3d.tns"]:
+    for tname in ["nell-1", "nell-2", "flickr-3d", "vast-2015-mc1-3d"]:
         tensor_frame_dict[tname] = pd.DataFrame()
 
     try:
@@ -179,5 +179,73 @@ def get_data_mttkrp():
         pass
     return tensor_frame_dict
 
+def get_data_ttmc():
+    # maps each tensor name to a pandas frame. Each frame has the time taken by each method for each mode. Order is mode1, mode2, mode3
+    tensor_frame_dict = {}
+    for tname in ["nell-1", "nell-2", "flickr-3d", "vast-2015-mc1-3d"]:
+        tensor_frame_dict[tname] = pd.DataFrame()
 
-get_data_mttkrp()
+    try:
+        with open("ttmc_mode1.txt", "r") as f:
+            lines = f.readlines()
+            tensor_name = None
+            running_frame = None
+            for line in lines:
+                line = line.replace("_", " ")
+                words = line.split()
+                if "Running" in words:
+                    if running_frame is not None:
+                        tensor_frame_dict[tensor_name] = pd.concat(
+                            [tensor_frame_dict[tensor_name], running_frame])
+                    tensor_name = words[3].split("/")[1].split(".")[0]
+                    running_frame = pd.DataFrame({"const": -1}, index=[0])
+                    continue
+                if words[0] != "Time":
+                    continue
+                method_name = words[2][:-1]
+                running_frame[method_name] = float(words[3])
+
+        with open("ttmc_mode2.txt", "r") as f:
+            lines = f.readlines()
+            tensor_name = None
+            running_frame = None
+            for line in lines:
+                line = line.replace("_", " ")
+                words = line.split()
+                if "Running" in words:
+                    if running_frame is not None:
+                        tensor_frame_dict[tensor_name] = pd.concat(
+                            [tensor_frame_dict[tensor_name], running_frame])
+                    tensor_name = words[3].split("/")[1].split(".")[0]
+                    running_frame = pd.DataFrame({"const": -1}, index=[1])
+                    continue
+                if words[0] != "Time":
+                    continue
+                method_name = words[2][:-1]
+                running_frame[method_name] = float(words[3])
+
+        with open("ttmc_mode3.txt", "r") as f:
+            lines = f.readlines()
+            tensor_name = None
+            running_frame = None
+            for line in lines:
+                line = line.replace("_", " ")
+                words = line.split()
+                if "Running" in words:
+                    if running_frame is not None:
+                        tensor_frame_dict[tensor_name] = pd.concat(
+                            [tensor_frame_dict[tensor_name], running_frame])
+                    tensor_name = words[3].split("/")[1].split(".")[0]
+                    running_frame = pd.DataFrame({"const": -1}, index=[2])
+                    continue
+                if words[0] != "Time":
+                    continue
+                method_name = words[2][:-1]
+                running_frame[method_name] = float(words[3])
+
+    except FileNotFoundError:
+        pass
+    return tensor_frame_dict
+
+
+
