@@ -37,7 +37,7 @@ void mttkrp_fused3(Tensor<double> I, Tensor<double> M2, Tensor<double> R,
   R.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time mttkrp_fused3:  " << elapsed.count() << " ms "
+  std::cout << "Time mttkrp3_const:  " << elapsed.count() << " ms "
             << std::endl;
 }
 
@@ -54,7 +54,7 @@ void mttkrp_nary3(Tensor<double> I, Tensor<double> M2, Tensor<double> R,
   R.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time mttkrp_nary3:  " << elapsed.count() << " ms " << std::endl;
+  std::cout << "Time mttkrp3_TACO-Nary:  " << elapsed.count() << " ms " << std::endl;
 }
 
 void mttkrp_unfused3(Tensor<double> I, Tensor<double> M2, Tensor<double> R,
@@ -80,7 +80,7 @@ void mttkrp_unfused3(Tensor<double> I, Tensor<double> M2, Tensor<double> R,
   R.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time mttkrp_unfused3:  " << elapsed.count() << " ms "
+  std::cout << "Time mttkrp3_TACO-unfused:  " << elapsed.count() << " ms "
             << std::endl;
   R = R.transpose({1, 0});
 }
@@ -112,19 +112,19 @@ int main() {
     Tensor<double> M2("M2", {I1.getDimension(0), Rank}, {Dense, Dense});
     generate_ones(M2);
 
-    //Tensor<double> R("result_fused", {I1.getDimension(2), Rank},
-    //                 {Dense, Dense});
-    //mttkrp_fused3(inp, M2, R, M1);
+    Tensor<double> R("result_fused", {I1.getDimension(2), Rank},
+                     {Dense, Dense});
+    mttkrp_fused3(inp, M2, R, M1);
 
     Tensor<double> R2("result_unfused", {Rank, I1.getDimension(2)},
                       {Dense, Dense});
     // Tensor<double> inp_unfused = I1.transpose({2, 1, 0});
     mttkrp_unfused3(inp, M2, R2, M1);
 
-    //Tensor<double> R3("result_nary", {I1.getDimension(2), Rank},
-    //                  {Dense, Dense});
-    //// Tensor<double> inp_fused = I1.transpose({2, 1, 0});
-    //mttkrp_nary3(inp, M2, R3, M1);
+    Tensor<double> R3("result_nary", {I1.getDimension(2), Rank},
+                      {Dense, Dense});
+    // Tensor<double> inp_fused = I1.transpose({2, 1, 0});
+    mttkrp_nary3(inp, M2, R3, M1);
   }
 
   return 0;
