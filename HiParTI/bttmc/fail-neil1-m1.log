@@ -1,0 +1,75 @@
+(base) yufan@zeus:~/HiParTI/bttmc$ bash exp_x1.sh /home/yufan/data_frostt_sparta/nell-1.tns /home/yufan/data_frostt_sparta/y.tns /home/yufan/data_frostt_sparta/x.tns /home/yufan/HiParTI/bttmc/conf-m3.txt 
+The I is: /home/yufan/data_frostt_sparta/nell-1.tns
+M2 is: /home/yufan/data_frostt_sparta/y.tns
+M1 is: /home/yufan/data_frostt_sparta/x.tns
+config file is: /home/yufan/HiParTI/bttmc/conf-m3.txt
+===========================
+config file: /home/yufan/HiParTI/bttmc/conf-m3.txt
+
+((I*M)*N)
+
+n 2
+n : 2
+
+m 1 x 1 y 1
+m : 1
+x : 1
+y : 1
+
+m 1 x 0 y 1
+m : 1
+x : 0
+y : 1
+
+t 1
+
+
+expression: ((I*M)*N)
+
+n: 2
+t: 1
+input_file_num: 3
+var name: I
+var input file: /home/yufan/data_frostt_sparta/nell-1.tns
+var name: M
+var input file: /home/yufan/data_frostt_sparta/y.tns
+var name: N
+var input file: /home/yufan/data_frostt_sparta/x.tns
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=2902330x2143368x25495389 NNZ=143599552 DENSITY=9.054155e-13
+Average slice length (c): 49.48 , 67.00 , 5.63
+COO-STORAGE=2.14 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=16x2143368 NNZ=34293888 DENSITY=1.000000e+00
+Average slice length (c): 2143368.00 , 16.00
+COO-STORAGE=392.46 MiB
+
+Original Tensors: 
+cmode m 1
+x y 1 1
+[Input Processing]: 26.168324 s
+[Index Search]: 98.913977 s
+[Accumulation]: 1267.102750 s
+[Writeback]: 6.404570 s
+[Output Sorting]: 204.665682 s
+[Total time]: 1603.255302 s
+
+operand1: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=2902330x25495389x16 NNZ=1906030080 DENSITY=1.609909e-06
+Average slice length (c): 656.72 , 74.76 , 119126880.00
+COO-STORAGE=28.40 GiB
+
+operand2: 
+COO Sparse Tensor information (use sptIndex, sptValue))---------
+DIMS=16x2902330 NNZ=46437280 DENSITY=1.000000e+00
+Average slice length (c): 2902330.00 , 16.00
+COO-STORAGE=531.43 MiB
+
+Original Tensors: 
+cmode m 1
+x y 0 1
+[Input Processing]: 442.088816 s

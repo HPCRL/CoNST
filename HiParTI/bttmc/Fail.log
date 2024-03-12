@@ -1,0 +1,30 @@
+================ Start /home/yufan/data_frostt_sparta/nell-1.tns mode 3 ================
+The file /home/yufan/data_frostt_sparta/m.tns has been deleted.
+generate_ttmc_dense_matrices_y done
+sparta m3 -i /home/yufan/data_frostt_sparta/nell-1.tns -x /home/yufan/data_frostt_sparta/x.tns -y /home/yufan/data_frostt_sparta/y.tns
+Traceback (most recent call last):
+  File "/home/yufan/HiParTI/bttmc/generate_tns_scipy.py", line 176, in <module>
+    call_sparta_m3(tns_file, x_path, y_path, config_file, bash_script_path)
+  File "/home/yufan/HiParTI/bttmc/generate_tns_scipy.py", line 104, in call_sparta_m3
+    result = subprocess.run(['bash', bash_script_path] + script_arguments, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+  File "/home/yufan/miniconda3/lib/python3.8/subprocess.py", line 512, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bash', '/home/yufan/HiParTI/bttmc/exp_x1.sh', '/home/yufan/data_frostt_sparta/nell-1.tns', '/home/yufan/data_frostt_sparta/y.tns', '/home/yufan/data_frostt_sparta/x.tns', '/home/yufan/HiParTI/bttmc/conf-m3.txt']' returned non-zero exit status 137.
+
+
+================ Start /home/yufan/data_frostt_sparta/flickr-3d.tns mode 2 ================
+n_path: /home/yufan/data_frostt_sparta/n.tns
+The file /home/yufan/data_frostt_sparta/n.tns has been deleted.
+generate_ttmc_dense_matrices_x done
+sparta m2 -i /home/yufan/data_frostt_sparta/flickr-3d.tns -m /home/yufan/data_frostt_sparta/m.tns -x /home/yufan/data_frostt_sparta/x.tns
+Traceback (most recent call last):
+  File "/home/yufan/HiParTI/bttmc/generate_tns_scipy.py", line 167, in <module>
+    call_sparta_m2(tns_file, m_path, x_path, config_file, bash_script_path)
+  File "/home/yufan/HiParTI/bttmc/generate_tns_scipy.py", line 93, in call_sparta_m2
+    result = subprocess.run(['bash', bash_script_path] + script_arguments, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+  File "/home/yufan/miniconda3/lib/python3.8/subprocess.py", line 512, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bash', '/home/yufan/HiParTI/bttmc/exp_x1.sh', '/home/yufan/data_frostt_sparta/flickr-3d.tns', '/home/yufan/data_frostt_sparta/m.tns', '/home/yufan/data_frostt_sparta/x.tns', '/home/yufan/HiParTI/bttmc/conf-m2.txt']' returned non-zero exit status 137.
+
+
+================ Start /home/yufan/data_frostt_sparta/flickr-3d.tns mode 3 ================
