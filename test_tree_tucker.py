@@ -1,5 +1,6 @@
 from parsing import Tensor, SparseIndex, IntermediateResult, BinaryContraction, NaryContraction
 from fused_ir import FusedIR
+import time
 
 # R(i, a, b, c) += I(i, j, k, l) * M1(j, a) * M2(k, b) * M3(l, c)
 i = SparseIndex("i")
@@ -8,7 +9,7 @@ k = SparseIndex("k")
 a = SparseIndex("a")
 b = SparseIndex("b")
 
-res1 = Tensor("R1", [i, a, b])
+res1 = Tensor("R1", [i, a, b], dense=True)
 I = Tensor("I", [i, j, k])
 M1 = Tensor("M1", [j, a])
 M2 = Tensor("M2", [k, b])
@@ -18,8 +19,10 @@ contraction = NaryContraction(res1, [I, M1, M2])
 contraction.statements = statements
 print(contraction)
 gen = contraction.fuse_loops(workspace=False)
+start = time.time()
 fir = FusedIR(gen)
 fir.reduce_intermediates()
 print(fir)
 print(fir.emit_taco_kernel("ttmc_fused"))
-
+end = time.time()
+print("Time taken to lower solver output to TACO: ", end-start)

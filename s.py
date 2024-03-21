@@ -45,11 +45,19 @@ out_inds = [[0, 5, 6, 7],     # S0: a, q, r, s
 class SolverError(Exception):
     pass
 
+def make_intvar(name):
+    if not hasattr(make_intvar, "count"):
+        make_intvar.count = 0
+    make_intvar.count += 1
+    return Int(name)
 #indices is set of loops surrounding each statement, really the hash values of SparseIndexs
 #indices_id_map is a dict{index_hash: SparseIndex}
 def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_threshold, workspace):
+    import time
+    start = time.time()
+    make_intvar.count = 0
     # constraint variables spos_0, spos_1, ... for topsort order
-    spos = [Int("spos_%s" % i) for i in range(len(statements))]
+    spos = [make_intvar("spos_%s" % i) for i in range(len(statements))]
     # constraints on the range of spos_*: 0 <= spos_* <= n-1
     spos_range = [And(0 <= spos[i], spos[i] < len(statements)) for i in range(len(statements))]
     # all spos_* are unique: this, their values define a permutation of 0, 1, ...
@@ -61,7 +69,7 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
     # variable lpos_x_y is not used when statement x does not use index y
     lpos = []
     for s in range(len(statements)):
-        lpos.append({ind: Int("lpos_%s_%s" % (s, ind)) for ind in indices_id_map.keys()})
+        lpos.append({ind: make_intvar("lpos_%s_%s" % (s, ind)) for ind in indices_id_map.keys()})
     #lpos = [[Int("lpos_%s_%s" % (i, j)) for j in indices] for i in range(len(statements))]
     #print("indices_map", indices_id_map)
 
@@ -85,7 +93,7 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
         # this is so that we use atleast a 1D workspace - contractions are fast that way.
         if not statements[s].is_last() and statements[s].get_contraction_id() is not None:
             lpos_contraction += [lpos[s][statements[s].get_contraction_id()] < (len(indxs)-1)]
-        elif statements[s].is_last() and statements[s].get_contraction_id() is not None:
+        elif workspace and statements[s].is_last() and statements[s].get_contraction_id() is not None:
             lpos_contraction += [lpos[s][statements[s].get_contraction_id()] == (len(indxs)-1)]
         # add constraint to push small loop down
         for ind1 in indxs:
@@ -127,7 +135,7 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
     for ind_t, t in enumerate(input_tensors):
         this_tensor_vars = []
         for ind_d, d in enumerate(t.shape):
-            some_dpos_var = Int("dpos_%s_%s" % (ind_t, ind_d))
+            some_dpos_var = make_intvar("dpos_%s_%s" % (ind_t, ind_d))
             dpos_to_str[some_dpos_var] = d
             this_tensor_vars.append(some_dpos_var)
         dpos_vars[t] = this_tensor_vars
@@ -165,7 +173,12 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
     s = Solver()
     s.add(all_constraints)
     #print(s)
-    if s.check() == sat:
+    boolval = s.check()
+    end = time.time()
+    print(f"Time taken by solver: {end-start}")
+    if boolval == sat:
+        print(f"Number of constraints: {len(s.assertions())}")
+        print(f"Number of variables: {make_intvar.count}")
         m = s.model()
         #print("Topsort order:")
         for i in range(len(statements)):
@@ -192,5 +205,7 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
                     stmt_tup = (statements[j], loop_order, input_orders)
                     yield stmt_tup
     else:
+        print(f"Number of constraints: {len(s.assertions())}")
+        print(f"Number of variables: {make_intvar.count}")
         print("Unsatisfiable")
         raise SolverError("Unsatisfiable")

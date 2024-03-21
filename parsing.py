@@ -33,7 +33,7 @@ class DenseIndex(Index):
 
 
 class Tensor:
-    def __init__(self, name: str, shape: List[Index], base_tensor=None):
+    def __init__(self, name: str, shape: List[Index], base_tensor=None, dense=False):
         self.name = name
         self.shape = shape
         self.base_tensor = base_tensor
