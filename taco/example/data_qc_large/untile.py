@@ -17,7 +17,7 @@ def untileC(tensor):
     tensor_mod = []
     for row in tensor:
         nnz_val = float(row[-1])
-        pao, mo = int(row[0]) - 1, int(row[1]) - 1
+        pao, mo = int(row[0]), int(row[1])
         linearized_paos = [pao * TILE_AO + i for i in range(0, TILE_AO)]
         for new_pao in linearized_paos:
             tensor_mod.append([new_pao, mo, nnz_val])
@@ -27,7 +27,7 @@ def untileE(tensor):
     tensor_mod = []
     for row in tensor:
         nnz_val = float(row[-1])
-        pao1, pao2, k = int(row[0]) - 1, int(row[1]) - 1, int(row[2]) - 1
+        pao1, pao2, k = int(row[0]), int(row[1]), int(row[2])
         linearized_paos1 = [pao1 * TILE_AO + i for i in range(0, TILE_AO)]
         linearized_paos2 = [pao2 * TILE_AO + i for i in range(0, TILE_AO)]
         linearized_k = [k * TILE_K + i for i in range(0, TILE_K)]
@@ -41,7 +41,7 @@ def untileIX(tensor):
     tensor_mod = []
     for row in tensor:
         nnz_val = float(row[-1])
-        mo, k = int(row[0]) - 1, int(row[1]) - 1
+        mo, k = int(row[0]), int(row[1])
         linearized_k = [k * TILE_K + i for i in range(0, TILE_K)]
         for new_k in linearized_k:
             tensor_mod.append([mo, new_k, nnz_val])
@@ -51,7 +51,7 @@ def untileP(tensor):
     tensor_mod = []
     for row in tensor:
         nnz_val = float(row[-1])
-        pao1, pao2 = int(row[0]) - 1, int(row[1]) - 1
+        pao1, pao2 = int(row[0]), int(row[1])
         linearized_paos1 = [pao1 * TILE_AO + i for i in range(0, TILE_AO)]
         linearized_paos2 = [pao2 * TILE_AO + i for i in range(0, TILE_AO)]
         for new_pao1 in linearized_paos1:

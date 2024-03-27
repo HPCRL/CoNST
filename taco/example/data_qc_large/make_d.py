@@ -1,5 +1,5 @@
 import random
-AUX = 175
+AUX = 900
 with open("D.tns", "w") as dfile:
     for k in range(1, AUX+1):
         for l in range(1, AUX+1):
