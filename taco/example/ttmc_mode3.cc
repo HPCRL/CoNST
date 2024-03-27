@@ -102,31 +102,39 @@ void generate_ones(Tensor<double> &out) {
   out.pack();
 }
 
-int main() {
+int main(int argc, char *argv[]) {
 
-  for (auto file : std::filesystem::directory_iterator(
-           std::filesystem::current_path() / "data_frostt/")) {
-    std::cout << "****** Running " << file << "********" << std::endl;
-    Tensor<double> I1 = read(file.path(), Format({Dense, Sparse, Sparse}));
-    I1.pack();
-    I1.setName("Input");
-    std::cout << "Read I" << std::endl;
+  assert(argc == 3);
+  std::string tensor_name = argv[1];
+  int method_index = std::stoi(argv[2]);
+  if (method_index == 0) {
+    std::cout << "****** Running " << tensor_name << "********" << std::endl;
+  }
+  auto fpath = std::filesystem::current_path() / "data_frostt/" / tensor_name;
+  Tensor<double> I1 = read(fpath.string(), Format({Dense, Sparse, Sparse}));
 
-    Tensor<double> M1("M1", {Rank, I1.getDimension(0)}, {Dense, Dense});
-    generate_ones(M1);
+  I1.pack();
+  I1.setName("Input");
+  std::cout << "Read I" << std::endl;
 
-    Tensor<double> M2("M2", {Rank, I1.getDimension(1)}, {Dense, Dense});
-    generate_ones(M2);
+  Tensor<double> M1("M1", {Rank, I1.getDimension(0)}, {Dense, Dense});
+  generate_ones(M1);
 
+  Tensor<double> M2("M2", {Rank, I1.getDimension(1)}, {Dense, Dense});
+  generate_ones(M2);
+
+  if (method_index == 0) {
     Tensor<double> R1("result_fusedinnermost", {Rank, I1.getDimension(2), Rank},
                       {Dense, Dense, Dense});
     Tensor<double> i_fused_innermost = I1.transpose({0, 2, 1});
     ttmc_fused3_innermost(i_fused_innermost, M2, R1, M1);
+  } else if (method_index == 1) {
 
     Tensor<double> R2("result_unfused", {Rank, I1.getDimension(2), Rank},
                       {Dense, Dense, Dense});
     Tensor<double> i_unfused = I1.transpose({2, 0, 1});
     ttmc_unfused3(i_unfused, M2, R2, M1);
+  } else if (method_index == 2) {
 
     Tensor<double> R3("result_nary", {I1.getDimension(2), Rank, Rank},
                       {Dense, Dense, Dense});

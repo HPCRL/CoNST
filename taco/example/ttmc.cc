@@ -42,8 +42,7 @@ void ttmc_fused_innermost(Tensor<double> I, Tensor<double> M2,
   R1.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time ttmc1_const:  " << elapsed.count() << " ms "
-            << std::endl;
+  std::cout << "Time ttmc1_const:  " << elapsed.count() << " ms " << std::endl;
 }
 
 void ttmc_nary(Tensor<double> I, Tensor<double> M1, Tensor<double> M2,
@@ -63,7 +62,8 @@ void ttmc_nary(Tensor<double> I, Tensor<double> M1, Tensor<double> M2,
   R.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time ttmc1_TACO-Nary:  " << elapsed.count() << " ms " << std::endl;
+  std::cout << "Time ttmc1_TACO-Nary:  " << elapsed.count() << " ms "
+            << std::endl;
 }
 
 void ttmc_unfused(Tensor<double> I, Tensor<double> M2, Tensor<double> R,
@@ -90,7 +90,8 @@ void ttmc_unfused(Tensor<double> I, Tensor<double> M2, Tensor<double> R,
   R.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time ttmc1_TACO-unfused:  " << elapsed.count() << " ms " << std::endl;
+  std::cout << "Time ttmc1_TACO-unfused:  " << elapsed.count() << " ms "
+            << std::endl;
 }
 
 void generate_ones(Tensor<double> &out) {
@@ -103,29 +104,36 @@ void generate_ones(Tensor<double> &out) {
   out.pack();
 }
 
-int main() {
+int main(int argc, char **argv) {
 
-  for (auto file : std::filesystem::directory_iterator(
-           std::filesystem::current_path() / "data_frostt/")) {
-    std::cout << "****** Running " << file << "********" << std::endl;
-    Tensor<double> I1 = read(file.path(), Format({Dense, Sparse, Sparse}));
-    I1.pack();
-    I1.setName("Input");
-    std::cout << "Read I" << std::endl;
+  assert(argc == 3);
+  std::string tensor_name = argv[1];
+  int method_index = std::stoi(argv[2]);
+  if (method_index == 0) {
+    std::cout << "****** Running " << tensor_name << "********" << std::endl;
+  }
+  auto fpath = std::filesystem::current_path() / "data_frostt/" / tensor_name;
+  Tensor<double> I1 = read(fpath.string(), Format({Dense, Sparse, Sparse}));
+  I1.pack();
+  I1.setName("Input");
+  std::cout << "Read I" << std::endl;
 
-    Tensor<double> M1("M1", {Rank, I1.getDimension(1)}, {Dense, Dense});
-    generate_ones(M1);
+  Tensor<double> M1("M1", {Rank, I1.getDimension(1)}, {Dense, Dense});
+  generate_ones(M1);
 
-    Tensor<double> M2("M2", {Rank, I1.getDimension(2)}, {Dense, Dense});
-    generate_ones(M2);
+  Tensor<double> M2("M2", {Rank, I1.getDimension(2)}, {Dense, Dense});
+  generate_ones(M2);
+  if (method_index == 0) {
     Tensor<double> R("result_fused_fullinner", {Rank, I1.getDimension(0), Rank},
                      {Dense, Dense, Dense});
     ttmc_fused_innermost(I1, M2, R, M1);
+  } else if (method_index == 1) {
 
     Tensor<double> R2("result_unfused", {I1.getDimension(0), Rank, Rank},
                       {Dense, Dense, Dense});
     Tensor<double> i_unfused = I1;
     ttmc_unfused(i_unfused, M2, R2, M1);
+  } else if (method_index == 2) {
 
     Tensor<double> R3("result_nary", {I1.getDimension(0), Rank, Rank},
                       {Dense, Dense, Dense});
