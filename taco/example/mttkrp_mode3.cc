@@ -54,7 +54,8 @@ void mttkrp_nary3(Tensor<double> I, Tensor<double> M2, Tensor<double> R,
   R.compute();
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double, std::milli> elapsed = end - start;
-  std::cout << "Time mttkrp3_TACO-Nary:  " << elapsed.count() << " ms " << std::endl;
+  std::cout << "Time mttkrp3_TACO-Nary:  " << elapsed.count() << " ms "
+            << std::endl;
 }
 
 void mttkrp_unfused3(Tensor<double> I, Tensor<double> M2, Tensor<double> R,
@@ -95,31 +96,38 @@ void generate_ones(Tensor<double> &out) {
   out.pack();
 }
 
-int main() {
-  for (auto file : std::filesystem::directory_iterator(
-           std::filesystem::current_path() / "data_frostt/")) {
-    std::cout << "****** Running " << file << "********" << std::endl;
-    Tensor<double> I1 = read(file.path(), Format({Dense, Sparse, Sparse}));
-    // Tensor<double> I1 = read("inp_scipy.tns", {Dense, Sparse, Sparse});
-    I1.pack();
-    I1.setName("Input");
-    std::cout << "Read I" << std::endl;
-    Tensor<double> inp = I1.transpose({2, 1, 0});
+int main(int argc, char *argv[]) {
+  // Tensor<double> I1 = read("inp_scipy.tns", {Dense, Sparse, Sparse});
+  assert(argc == 3);
+  std::string tensor_name = argv[1];
+  int method_index = std::stoi(argv[2]);
+  if (method_index == 0) {
+    std::cout << "****** Running " << tensor_name << "********" << std::endl;
+  }
+  auto fpath = std::filesystem::current_path() / "data_frostt/" / tensor_name;
+  Tensor<double> I1 = read(fpath.string(), Format({Dense, Sparse, Sparse}));
+  I1.pack();
+  I1.setName("Input");
+  std::cout << "Read I" << std::endl;
+  Tensor<double> inp = I1.transpose({2, 1, 0});
 
-    Tensor<double> M1("M1", {I1.getDimension(1), Rank}, {Dense, Dense});
-    generate_ones(M1);
+  Tensor<double> M1("M1", {I1.getDimension(1), Rank}, {Dense, Dense});
+  generate_ones(M1);
 
-    Tensor<double> M2("M2", {I1.getDimension(0), Rank}, {Dense, Dense});
-    generate_ones(M2);
+  Tensor<double> M2("M2", {I1.getDimension(0), Rank}, {Dense, Dense});
+  generate_ones(M2);
 
+  if (method_index == 0) {
     Tensor<double> R("result_fused", {I1.getDimension(2), Rank},
                      {Dense, Dense});
     mttkrp_fused3(inp, M2, R, M1);
+  } else if (method_index == 1) {
 
     Tensor<double> R2("result_unfused", {Rank, I1.getDimension(2)},
                       {Dense, Dense});
     // Tensor<double> inp_unfused = I1.transpose({2, 1, 0});
     mttkrp_unfused3(inp, M2, R2, M1);
+  } else if (method_index == 2) {
 
     Tensor<double> R3("result_nary", {I1.getDimension(2), Rank},
                       {Dense, Dense});

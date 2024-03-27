@@ -129,13 +129,19 @@ def get_data_mttkrp():
                     if running_frame is not None:
                         tensor_frame_dict[tensor_name] = pd.concat(
                             [tensor_frame_dict[tensor_name], running_frame])
-                    tensor_name = words[3].split("/")[1].split(".")[0]
-                    running_frame = pd.DataFrame({"const": -1}, index=[0])
+                    try:
+                        tensor_name = words[2].split(".")[0]
+                        running_frame = pd.DataFrame({"const": -1}, index=[0])
+                    except IndexError:
+                        continue
                     continue
                 if words[0] != "Time":
                     continue
                 method_name = words[2][:-1]
                 running_frame[method_name] = float(words[3])
+            if running_frame is not None:
+                tensor_frame_dict[tensor_name] = pd.concat(
+                    [tensor_frame_dict[tensor_name], running_frame])
 
         with open("mttkrp_mode2.txt", "r") as f:
             lines = f.readlines()
@@ -148,13 +154,19 @@ def get_data_mttkrp():
                     if running_frame is not None:
                         tensor_frame_dict[tensor_name] = pd.concat(
                             [tensor_frame_dict[tensor_name], running_frame])
-                    tensor_name = words[3].split("/")[1].split(".")[0]
-                    running_frame = pd.DataFrame({"const": -1}, index=[1])
+                    try:
+                        tensor_name = words[2].split(".")[0]
+                        running_frame = pd.DataFrame({"const": -1}, index=[1])
+                    except IndexError:
+                        continue
                     continue
                 if words[0] != "Time":
                     continue
                 method_name = words[2][:-1]
                 running_frame[method_name] = float(words[3])
+            if running_frame is not None:
+                tensor_frame_dict[tensor_name] = pd.concat(
+                    [tensor_frame_dict[tensor_name], running_frame])
 
         with open("mttkrp_mode3.txt", "r") as f:
             lines = f.readlines()
@@ -167,13 +179,18 @@ def get_data_mttkrp():
                     if running_frame is not None:
                         tensor_frame_dict[tensor_name] = pd.concat(
                             [tensor_frame_dict[tensor_name], running_frame])
-                    tensor_name = words[3].split("/")[1].split(".")[0]
-                    running_frame = pd.DataFrame({"const": -1}, index=[2])
+                    try:
+                        tensor_name = words[2].split(".")[0]
+                        running_frame = pd.DataFrame({"const": -1}, index=[2])
+                    except IndexError:
+                        continue
                     continue
                 if words[0] != "Time":
                     continue
                 method_name = words[2][:-1]
                 running_frame[method_name] = float(words[3])
+            if running_frame is not None:
+                tensor_frame_dict[tensor_name] = pd.concat([tensor_frame_dict[tensor_name], running_frame])
 
     except FileNotFoundError:
         pass

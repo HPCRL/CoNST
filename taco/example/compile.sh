@@ -9,5 +9,5 @@ g++ -g -O3 -march=native -mtune=native -ffast-math -std=c++17 -DTACO -fopenmp -I
 #g++ -std=c++17 -DTACO -I ../include -L ../build/lib $1.cc -ltaco -o $1
 #g++ -std=c++17 -fsanitize=address -DTACO -I ../include -L ../build/lib $1.cc -ltaco -o $1
 #OMP_THREAD_LIMIT=1 ./$1
-numactl --physcpubind=+1 ./$1 $2
+numactl --physcpubind=+1 ./$1 $2 $3
 #./$1
