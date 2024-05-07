@@ -6,7 +6,9 @@ void filter_const(Tensor<double> Int_disk, Tensor<double> C_disk,
                   Tensor<double> L_disk) {
   IndexVar i("i");
   IndexVar muhat("muhat");
+  IndexVar muhat0("muhat0");
   IndexVar nu("nu");
+  IndexVar mu0("mu0");
   IndexVar mu("mu");
   IndexVar k("k");
   Tensor<double> Int = getCSFOrder(Int_disk, {mu, nu, k}, {k, nu, mu});
@@ -24,16 +26,21 @@ void filter_const(Tensor<double> Int_disk, Tensor<double> C_disk,
       TensorVar("IntCPhat", Type(Float64, {PAO}), {taco::dense});
   auto fused_ir = forall(
       k,
-      forall(
-          i,
-          where(forall(muhat,
-                       X_var(k, i, muhat) += IntCPhat(muhat) * L_var(k, i)),
-                where(forall(mu, forall(muhat, IntCPhat(muhat) +=
-                                               IntC(mu) * Phat_var(mu, muhat))),
-                      forall(nu, forall(mu, IntC(mu) += Int_var(k, nu, mu) *
-                                                        C_var(i, nu)))))));
+      forall(i,
+             where(forall(muhat0,
+                          X_var(k, i, muhat0) += IntCPhat(muhat0) * L_var(k, i)),
+                   where(forall(mu0, forall(muhat,
+                                            IntCPhat(muhat) +=
+                                            IntC(mu0) * Phat_var(mu0, muhat))),
+                         forall(nu, forall(mu, IntC(mu) += Int_var(k, nu, mu) *
+                                                           C_var(i, nu)))))));
   ;
   X(k, i, muhat) += Int(k, nu, mu) * C(i, nu) * Phat(mu, muhat) * L(k, i);
+  auto par_fused_ir = fused_ir
+                          //.parallelize(muhat, ParallelUnit::CPUThread,
+                          //             OutputRaceStrategy::NoRaces);
+                          .parallelize(mu, ParallelUnit::CPUThread,
+                                       OutputRaceStrategy::NoRaces);
   X.compile(fused_ir);
   auto start = std::chrono::high_resolution_clock::now();
   X.assemble();

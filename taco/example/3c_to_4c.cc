@@ -83,13 +83,13 @@ int main(int argc, char **argv) {
                      {Dense, Sparse, Sparse, Sparse});
   const_3c_to_4c(I1, D, Res, I2);
 
-  Tensor<double> Res_unf("Res_unf", {MO, PAO_HAT, MO, PAO_HAT},
-                         {Dense, Sparse, Sparse, Sparse});
-  unfused_3c_to_4c(I1, D, Res_unf, I2);
+  //Tensor<double> Res_unf("Res_unf", {MO, PAO_HAT, MO, PAO_HAT},
+  //                       {Dense, Sparse, Sparse, Sparse});
+  //unfused_3c_to_4c(I1, D, Res_unf, I2);
 
-  Tensor<double> Res_nary("Res_nary", {MO, MO, PAO_HAT, PAO_HAT},
-                          {Dense, Sparse, Sparse, Sparse});
-  nary_3c_to_4c(I1, D, Res_nary, I2);
+  //Tensor<double> Res_nary("Res_nary", {MO, MO, PAO_HAT, PAO_HAT},
+  //                        {Dense, Sparse, Sparse, Sparse});
+  //nary_3c_to_4c(I1, D, Res_nary, I2);
 
   return 0;
 }

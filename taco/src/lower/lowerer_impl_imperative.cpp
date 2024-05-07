@@ -1222,7 +1222,7 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
   }
   else if (forall.getParallelUnit() != ParallelUnit::NotParallel
             && forall.getOutputRaceStrategy() != OutputRaceStrategy::ParallelReduction && !ignoreVectorize) {
-    kind = LoopKind::Runtime;
+    kind = LoopKind::Static;
   }
 
   return Block::blanks(For::make(coordinate, bounds[0], bounds[1], 1, body,
@@ -1281,7 +1281,7 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
     }
     else if (forall.getParallelUnit() != ParallelUnit::NotParallel
              && forall.getOutputRaceStrategy() != OutputRaceStrategy::ParallelReduction && !ignoreVectorize) {
-      kind = LoopKind::Runtime;
+      kind = LoopKind::Static;
     }
 
     return Block::blanks(For::make(loopVar, 0, indexListSize, 1, body, kind,
@@ -1403,7 +1403,7 @@ Stmt LowererImplImperative::lowerForallPosition(Forall forall, Iterator iterator
     else if (forall.getParallelUnit() != ParallelUnit::NotParallel && 
 	     forall.getOutputRaceStrategy() != OutputRaceStrategy::ParallelReduction && 
 	     !ignoreVectorize) {
-      kind = LoopKind::Runtime;
+      kind = LoopKind::Static;
     }
 
     loop = For::make(iterator.getPosVar(), startBound, endBound, 1, loop, kind,
@@ -1567,7 +1567,7 @@ Stmt LowererImplImperative::lowerForallFusedPosition(Forall forall, Iterator ite
   }
   else if (forall.getParallelUnit() != ParallelUnit::NotParallel
            && forall.getOutputRaceStrategy() != OutputRaceStrategy::ParallelReduction && !ignoreVectorize) {
-    kind = LoopKind::Runtime;
+    kind = LoopKind::Static;
   }
   // Loop with preamble and postamble
   return Block::blanks(boundsCompute,

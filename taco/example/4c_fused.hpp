@@ -8,6 +8,7 @@ void const_3c_to_4c(Tensor<double> I1_disk, Tensor<double> D_disk,
   IndexVar i("i");
   IndexVar j("j");
   IndexVar l("l");
+  IndexVar l0("l0");
   IndexVar k("k");
   Tensor<double> I1 = getCSFOrder(I1_disk, {k, i, muhat}, {muhat, i, k});
   Tensor<double> D = D_disk;
@@ -22,13 +23,20 @@ void const_3c_to_4c(Tensor<double> I1_disk, Tensor<double> D_disk,
       muhat,
       forall(i,
              where(forall(nuhat,
-                          forall(j, forall(l, Result_var(muhat, i, nuhat, j) +=
-                                              I1D(l) * I2_var(nuhat, j, l)))),
+                          forall(j, forall(l0, Result_var(muhat, i, nuhat, j) +=
+                                              I1D(l0) * I2_var(nuhat, j, l0)))),
                    forall(k, forall(l, I1D(l) +=
                                        I1_var(muhat, i, k) * D_var(k, l))))));
   ;
+  auto par_fused_ir = fused_ir
+                          .parallelize(l, ParallelUnit::CPUThread,
+                                       OutputRaceStrategy::NoRaces);
+  // par_fused_ir = par_fused_ir.parallelize(muhat, ParallelUnit::CPUThread,
+  // OutputRaceStrategy::IgnoreRaces);
   Result(muhat, i, nuhat, j) += I1(muhat, i, k) * D(k, l) * I2(nuhat, j, l);
-  Result.compile(fused_ir);
+  std::cout << "Fused IR: " << par_fused_ir << std::endl;
+  //Result.compile(fused_ir);
+  Result.compile(par_fused_ir);
   auto start = std::chrono::high_resolution_clock::now();
   Result.assemble();
   Result.compute();
@@ -36,4 +44,5 @@ void const_3c_to_4c(Tensor<double> I1_disk, Tensor<double> D_disk,
   std::chrono::duration<double, std::milli> elapsed = end - start;
   std::cout << "Time const_3c_to_4c:  " << elapsed.count() << " ms "
             << std::endl;
+  //write("4centered_const_par.tns", Result);
 }
