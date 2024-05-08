@@ -1920,6 +1920,7 @@ IndexStmt IndexStmt::parallelize(IndexVar i, ParallelUnit parallel_unit, OutputR
   string reason;
   IndexStmt transformed = Parallelize(i, parallel_unit, output_race_strategy).apply(*this, &reason);
   if (!transformed.defined()) {
+      std::cout << "Error: " << reason << std::endl;
     taco_uerror << reason;
   }
   return transformed;

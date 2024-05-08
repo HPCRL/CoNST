@@ -1599,6 +1599,7 @@ IndexStmt parallelizeOuterLoop(IndexStmt stmt) {
     IndexStmt parallelized = Parallelize(forall.getIndexVar(), ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces).apply(stmt, &reason);
     if (parallelized == IndexStmt()) {
       // can't parallelize
+      std::cerr << "Failed to parallelize: " << reason << std::endl;
       return stmt;
     }
     return parallelized;

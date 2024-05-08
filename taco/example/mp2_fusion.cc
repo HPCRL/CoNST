@@ -149,19 +149,19 @@ int main(int argc, char *argv[]) {
 
   Tensor<double> X("X", {AUX, MO, PAO_HAT}, {Dense, Sparse, Sparse});
   filter_const(Int, C, Phat, X, L);
-  Tensor<double> X_nofilter("X", {MO, AUX, PAO_HAT}, {Dense, Sparse, Sparse});
-  nofilter_const(Int, C, X_nofilter, Phat);
+  //Tensor<double> X_nofilter("X", {MO, AUX, PAO_HAT}, {Dense, Sparse, Sparse});
+  //nofilter_const(Int, C, X_nofilter, Phat);
 
-  Tensor<double> X_unf("X", {PAO_HAT, AUX, MO}, {Dense, Sparse, Sparse});
-  noncov_mp2_unfused(Int, C, Phat, X_unf, L);
-  Tensor<double> X_nofilter_unf("X", {AUX, MO, PAO_HAT},
-                                {Dense, Sparse, Sparse});
-  nofilter_unfused(Int, C, X_nofilter_unf, Phat);
+  //Tensor<double> X_unf("X", {PAO_HAT, AUX, MO}, {Dense, Sparse, Sparse});
+  //noncov_mp2_unfused(Int, C, Phat, X_unf, L);
+  //Tensor<double> X_nofilter_unf("X", {AUX, MO, PAO_HAT},
+  //                              {Dense, Sparse, Sparse});
+  //nofilter_unfused(Int, C, X_nofilter_unf, Phat);
 
-  Tensor<double> X_nary("X", {AUX, MO, PAO_HAT}, {Dense, Sparse, Sparse});
-  noncov_mp2_nary(Int, C, Phat, X_nary, L);
-  Tensor<double> X_nofilter_nary("X", {AUX, MO, PAO_HAT},
-                                 {Dense, Sparse, Sparse});
-  nofilter_nary(Int, C, X_nofilter_nary, Phat);
+  //Tensor<double> X_nary("X", {AUX, MO, PAO_HAT}, {Dense, Sparse, Sparse});
+  //noncov_mp2_nary(Int, C, Phat, X_nary, L);
+  //Tensor<double> X_nofilter_nary("X", {AUX, MO, PAO_HAT},
+  //                               {Dense, Sparse, Sparse});
+  //nofilter_nary(Int, C, X_nofilter_nary, Phat);
   return 0;
 }
