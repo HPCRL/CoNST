@@ -26,12 +26,6 @@ class SparseIndex(Index):
         return f"IndexVar {self.name}(" + "\"" + self.name + "\");"
 
 
-class DenseIndex(Index):
-    def __init__(self, name: str, span: List[int]):
-        self.name = name
-        self.span = span
-
-
 class Tensor:
     def __init__(self, name: str, shape: List[Index], base_tensor=None, dense=False):
         self.name = name
