@@ -70,14 +70,11 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
     lpos = []
     for s in range(len(statements)):
         lpos.append({ind: make_intvar("lpos_%s_%s" % (s, ind)) for ind in indices_id_map.keys()})
-    #lpos = [[Int("lpos_%s_%s" % (i, j)) for j in indices] for i in range(len(statements))]
-    #print("indices_map", indices_id_map)
 
     # constraints on the range of lpos_*_*
     lpos_range = []
     lpos_unique = []
     lpos_absent = []
-    lpos_contraction = []
     lpos_order_by_size = []
     for s in range(len(statements)):
         indxs = indices[s]
@@ -91,46 +88,18 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
                                     lpos[s][i] < 1000*(s+2))]
         # contraction index should not be innermost in the loop order, unless it is the last statement.
         # this is so that we use atleast a 1D workspace - contractions are fast that way.
-        if not statements[s].is_last() and statements[s].get_contraction_id() is not None:
-            lpos_contraction += [lpos[s][statements[s].get_contraction_id()] < (len(indxs)-1)]
-        elif workspace and statements[s].is_last() and statements[s].get_contraction_id() is not None:
-            lpos_contraction += [lpos[s][statements[s].get_contraction_id()] == (len(indxs)-1)]
         # add constraint to push small loop down
         for ind1 in indxs:
             for ind2 in indxs:
                 if indices_id_map[ind1].get_span() < indices_id_map[ind2].get_span():
                     lpos_order_by_size += [lpos[s][ind1] > lpos[s][ind2]]
-        
-    #lpos_contraction = And(lpos_contraction)
-    #lpos_order_by_size = And(lpos_order_by_size)
 
-    # for every producer-consumer pair, try to reduce intermediate temp to a scalar
-    prod_cons_fusion = []
-    for d in deps:
-        source = d[0]
-        target = d[1]
-        temp_indices = out_inds[source]
-        # each level in the outermost band
-        for level in range(len(temp_indices)-(fusion_threshold-1)):
-            # first, certain indices of the temp should be in the outermost position
-            prod_cons_fusion += [Or([lpos[source][temp_indices[j]]
-                                    == level for j in range(len(temp_indices))])]
-            # second, they should be the same for the producer and the consumer
-            prod_cons_fusion += [And([Implies(lpos[source][temp_indices[j]] == level,
-                                     lpos[target][temp_indices[j]] == level) for j in range(len(temp_indices))])]
-            # third, all in-between statements must have the temp indices in the same positions
-            for s in range(len(statements)):
-                if (s != source and s != target):
-                    prod_cons_fusion += [Implies(And(spos[source] < spos[s], spos[s] < spos[target]), And([Implies(
-                        lpos[source][temp_indices[j]] == level, lpos[s][temp_indices[j]] == level) for j in range(len(temp_indices))]))]
-        # don't get same permuataion for prod and cons
-
-    # Now add constraints for data layout of input tensors.
+    ## Now add constraints for data layout of input tensors.
     dpos_to_str = {}
     dpos_vars = {}
     dpos_unique = []
     dpos_bounds = []
-    dpos_lpos_cons = []
+    #dpos_lpos_cons = []
     input_tensors = set([t for s in statements for t in s.get_input_tensors()])
     for ind_t, t in enumerate(input_tensors):
         this_tensor_vars = []
@@ -142,32 +111,15 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
     for tens, dvars_list in dpos_vars.items():
         dpos_unique.append(Distinct(dvars_list))
         dpos_bounds.append(And([And(0 <= dvars_list[i], dvars_list[i] < len(tens.get_shape())) for i in range(len(dvars_list))]))
-    for ind_s, s in enumerate(statements):
-        for tens in s.get_input_tensors():
-            for ind_s1, s1 in enumerate(tens.get_shape()):
-                for ind_s2, s2 in enumerate(tens.get_shape()):
-                    if ind_s1 == ind_s2:
-                        continue
 
-                    dpos_lpos_cons.append(Implies(lpos[ind_s][s1.get_id()] < lpos[ind_s][s2.get_id()], dpos_vars[tens][ind_s1] < dpos_vars[tens][ind_s2]))
-    dpos_equality_constraints = []
-    for t1 in input_tensors:
-        for t2 in input_tensors:
-            t1_vars = dpos_vars[t1]
-            t2_vars = dpos_vars[t2]
-            if t1.is_equivalent(t2) and t1 != t2:
-                dpos_equality_constraints.append(And([t1_vars[i] == t2_vars[i] for i in range(len(t1_vars))]))
-
-    all_dpos_constraints = dpos_unique + dpos_bounds + dpos_lpos_cons + dpos_equality_constraints
+    all_dpos_constraints = dpos_unique + dpos_bounds
 
 
 
 
     # put it all together
-    all_constraints = spos_depend + spos_range + spos_unique + \
-        lpos_range + lpos_unique + lpos_absent + prod_cons_fusion +all_dpos_constraints + lpos_order_by_size
-    if workspace:
-        all_constraints += lpos_contraction
+    all_constraints = spos_depend + spos_range + spos_unique + all_dpos_constraints + \
+            lpos_range + lpos_unique + lpos_absent #+ prod_cons_fusion +all_dpos_constraints + lpos_order_by_size
 
     # solve and print
     s = Solver()
@@ -184,24 +136,22 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
         for i in range(len(statements)):
             for j in range(len(statements)):
                 if (m[spos[j]] == i):
-                    #print("%s" % statements[j])
+                    print("%s" % statements[j])
                     input_orders = {}
                     for inp_t in statements[j].get_input_tensors():
-                        #print("  %s" % inp_t.name)
+                        print("  %s" % inp_t.name)
                         dpvarlist = dpos_vars[inp_t]
                         dpvarlist.sort(key = lambda v: m[v].as_long())
-                        #for dpvar in dpvarlist:
-                        #    print("    %s" % dpos_to_str[dpvar])
                         input_orders[inp_t] = list(map(lambda v: dpos_to_str[v], dpvarlist))
 
                     indxs = indices[j]
-                    #print(" Loop order:")
+                    print(" Loop order:")
                     loop_order = []
                     for k in range(len(indxs)):
                         for p in range(len(indxs)):
                             if (m[lpos[j][indxs[p]]] == k):
                                 loop_order.append(indices_id_map[indxs[p]])
-                                #print("%s" % indices_id_map[indxs[p]])
+                                print("%s" % indices_id_map[indxs[p]])
                     stmt_tup = (statements[j], loop_order, input_orders)
                     yield stmt_tup
     else:
