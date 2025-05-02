@@ -1,5 +1,5 @@
 from typing import List, Dict
-from parsing import Tensor, SparseIndex, IntermediateResult
+from parsing import TensorRef, SparseIndex, IntermediateResult
 import copy
 
 def get_includes():
@@ -11,7 +11,7 @@ def get_includes():
 
 
 class SparseContraction():
-    def __init__(self, result: Tensor, operands: List[Tensor], iterands: List[SparseIndex], input_tensor_ordering: Dict[Tensor, List[SparseIndex]]):
+    def __init__(self, result: TensorRef, operands: List[TensorRef], iterands: List[SparseIndex], input_tensor_ordering: Dict[TensorRef, List[SparseIndex]]):
         self.lhs = result
         self.rhs = operands
         self.loops = iterands

@@ -1,4 +1,4 @@
-from parsing import Tensor, SparseIndex, BinaryContraction, NaryContraction, IntermediateResult
+from parsing import TensorRef, SparseIndex, BinaryContraction, NaryContraction, IntermediateResult
 from fused_ir import FusedIR, get_includes
 
 k = SparseIndex("k", 100)
@@ -7,11 +7,11 @@ nu = SparseIndex("nu", 100)
 i = SparseIndex("i", 100)
 muhat = SparseIndex("muhat", 100)
 
-Int = Tensor("Int", [mu, nu, k])
-C = Tensor("C", [nu, i])
-Phat = Tensor("Phat", [mu, muhat])
-L = Tensor("L", [k, i])
-X = Tensor("X", [k, i, muhat])
+Int = TensorRef("Int", [mu, nu, k])
+C = TensorRef("C", [nu, i])
+Phat = TensorRef("Phat", [mu, muhat])
+L = TensorRef("L", [k, i])
+X = TensorRef("X", [k, i, muhat])
 IntC = IntermediateResult(Int, C, [nu], const_shape="PAO")
 IntCPhat = IntermediateResult(IntC, Phat, [mu], const_shape="PAO")
 statements = [BinaryContraction(IntC, Int, C), BinaryContraction(
@@ -29,7 +29,7 @@ with open("3c_filter_fused.hpp", "w") as f:
     f.write(fir.emit_taco_kernel("filter_const"))
 
 
-X_nofilter = Tensor("X_nofilter", [k, i, muhat])
+X_nofilter = TensorRef("X_nofilter", [k, i, muhat])
 IntC = IntermediateResult(Int, C, [nu], const_shape="PAO")
 statements = [BinaryContraction(IntC, Int, C),
               BinaryContraction(X_nofilter, IntC, Phat)]

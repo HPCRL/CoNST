@@ -1,6 +1,9 @@
 from typing import List
 from s import run_solver, SolverError
 
+class BaseTensor:
+    def __init__(self, name):
+        self.name = name
 
 class Index:
     def __init__(self, name: str, span: List[int]):
@@ -26,7 +29,7 @@ class SparseIndex(Index):
         return f"IndexVar {self.name}(" + "\"" + self.name + "\");"
 
 
-class Tensor:
+class TensorRef:
     def __init__(self, name: str, shape: List[Index], base_tensor=None, dense=False):
         self.name = name
         self.shape = shape
@@ -70,11 +73,11 @@ class Tensor:
         return f"TensorVar {self.name}_var = {self.name}.getTensorVar();"
 
     def __mul__(self, other):
-        assert isinstance(other, Tensor)
+        assert isinstance(other, TensorRef)
         return MultExpr(self, other)
 
 
-class IntermediateResult(Tensor):
+class IntermediateResult(TensorRef):
     def __init__(self, left_tensor, right_tensor, contraction_indices: List[SparseIndex], const_shape=""):
         self.name = left_tensor.name + right_tensor.name
         self.shape = set(left_tensor.shape).union(set(right_tensor.shape)).difference(
@@ -121,13 +124,13 @@ class MultExpr:
         self.ops.append(op)
 
     def __mul__(self, other):
-        assert isinstance(other, Tensor)
+        assert isinstance(other, TensorRef)
         self.add_operand(other)
         return self
 
 
 class BinaryContraction:
-    def __init__(self, lhs: Tensor, rhs_left: Tensor, rhs_right: Tensor):
+    def __init__(self, lhs: TensorRef, rhs_left: TensorRef, rhs_right: TensorRef):
         self.lhs = lhs
         self.op_left = rhs_left
         self.op_right = rhs_right
@@ -176,7 +179,7 @@ class BinaryContraction:
 
 
 class NaryContraction:
-    def __init__(self, lhs: Tensor, rhs: List[Tensor]):
+    def __init__(self, lhs: TensorRef, rhs: List[TensorRef]):
         self.lhs = lhs
         self.rhs = rhs
         self.statements = []
@@ -276,7 +279,7 @@ class NaryContraction:
                 next(run_solver(self.statements, [contr.get_loop_ids() for contr in self.statements], self.opdag(), [
                     contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh, workspace))
                 return run_solver(self.statements, [contr.get_loop_ids() for contr in self.statements], self.opdag(), [
-                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh, workspace)
+                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh, workspace, do_print=True)
             except SolverError as _:
                 print(f"Did not work for {thresh}")
                 continue

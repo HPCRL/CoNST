@@ -52,7 +52,7 @@ def make_intvar(name):
     return Int(name)
 #indices is set of loops surrounding each statement, really the hash values of SparseIndexs
 #indices_id_map is a dict{index_hash: SparseIndex}
-def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_threshold, workspace):
+def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_threshold, workspace, do_print = False):
     import time
     start = time.time()
     make_intvar.count = 0
@@ -126,36 +126,41 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
     s.add(all_constraints)
     #print(s)
     boolval = s.check()
-    end = time.time()
-    print(f"Time taken by solver: {end-start}")
+    #end = time.time()
+    #print(f"Time taken by solver: {end-start}")
     if boolval == sat:
-        print(f"Number of constraints: {len(s.assertions())}")
-        print(f"Number of variables: {make_intvar.count}")
+        if do_print:
+            print(f"Number of constraints: {len(s.assertions())}")
+            print(f"Number of variables: {make_intvar.count}")
         m = s.model()
         #print("Topsort order:")
         for i in range(len(statements)):
             for j in range(len(statements)):
                 if (m[spos[j]] == i):
-                    print("%s" % statements[j])
+                    if do_print:
+                        print("%s" % statements[j])
                     input_orders = {}
                     for inp_t in statements[j].get_input_tensors():
-                        print("  %s" % inp_t.name)
+                        if do_print:
+                            print("  %s" % inp_t.name)
                         dpvarlist = dpos_vars[inp_t]
                         dpvarlist.sort(key = lambda v: m[v].as_long())
                         input_orders[inp_t] = list(map(lambda v: dpos_to_str[v], dpvarlist))
 
                     indxs = indices[j]
-                    print(" Loop order:")
+                    if do_print:
+                        print(" Loop order:")
                     loop_order = []
                     for k in range(len(indxs)):
                         for p in range(len(indxs)):
                             if (m[lpos[j][indxs[p]]] == k):
                                 loop_order.append(indices_id_map[indxs[p]])
-                                print("%s" % indices_id_map[indxs[p]])
+                                if do_print:
+                                    print("%s" % indices_id_map[indxs[p]])
                     stmt_tup = (statements[j], loop_order, input_orders)
                     yield stmt_tup
     else:
-        print(f"Number of constraints: {len(s.assertions())}")
-        print(f"Number of variables: {make_intvar.count}")
+        #print(f"Number of constraints: {len(s.assertions())}")
+        #print(f"Number of variables: {make_intvar.count}")
         print("Unsatisfiable")
         raise SolverError("Unsatisfiable")

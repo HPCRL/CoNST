@@ -1,4 +1,4 @@
-from parsing import Tensor, SparseIndex, IntermediateResult, BinaryContraction, NaryContraction
+from parsing import TensorRef, SparseIndex, IntermediateResult, BinaryContraction, NaryContraction
 from fused_ir import FusedIR
 import time
 
@@ -9,10 +9,10 @@ k = SparseIndex("k")
 a = SparseIndex("a")
 b = SparseIndex("b")
 
-res1 = Tensor("R1", [i, a, b])
-I = Tensor("I", [i, j, k])
-M1 = Tensor("M1", [j, a])
-M2 = Tensor("M2", [k, b])
+res1 = TensorRef("R1", [i, a, b])
+I = TensorRef("I", [i, j, k])
+M1 = TensorRef("M1", [j, a])
+M2 = TensorRef("M2", [k, b])
 IM2 = IntermediateResult(I, M2, [k])
 statements = [BinaryContraction(res1, IM2, M1), BinaryContraction(IM2, I, M2)]
 contraction = NaryContraction(res1, [I, M1, M2])
