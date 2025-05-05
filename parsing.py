@@ -4,6 +4,35 @@ from s import run_solver, SolverError
 class BaseTensor:
     def __init__(self, name):
         self.name = name
+        self.alive_references = []
+        self.consistent_positions = []
+    def add_reference(self, tensor_ref):
+        this_shape = tensor_ref.get_shape()
+        for idx_s, s in enumerate(this_shape):
+            if idx_s not in self.consistent_positions:
+                self.consistent_positions.append(idx_s)
+            for act_ref in self.alive_references:
+                if s not in act_ref.get_shape():
+                    self.consistent_positions.remove(idx_s)
+                    continue
+                spos = act_ref.get_shape().index(s)
+                if idx_s != spos and idx_s in self.consistent_positions:
+                        self.consistent_positions.remove(idx_s)
+        self.alive_references.append(tensor_ref)
+
+    def print_consistent_positions(self):
+        print(f"Tensor {self.name} has consistent positions {self.consistent_positions}")
+        for act_ref in self.alive_references:
+            print(f"TensorRef {act_ref.name} has shape {act_ref.get_shape()}")
+
+    def get_consistent_ids(self):
+        consistent_ids = []
+        act_ref = self.alive_references[0]
+        for idx_s, s in enumerate(act_ref.get_shape()):
+            if idx_s in self.consistent_positions:
+                consistent_ids.append(s.get_id())
+        return consistent_ids
+        
 
 class Index:
     def __init__(self, name: str, span: List[int]):
@@ -50,6 +79,12 @@ class TensorRef:
     def get_dim(self, index):
         return self.shape[index].get_span()
 
+    def get_consistentency_constraint(self):
+        if self.base_tensor is None:
+            return lambda idx: True
+        else:
+            return lambda idx: idx in self.base_tensor.get_consistent_ids()
+
     def emit_access(self, index_order: List[SparseIndex], varname=True):
         if index_order is None:
             index_order = self.last_used_order
@@ -78,15 +113,19 @@ class TensorRef:
 
 
 class IntermediateResult(TensorRef):
-    def __init__(self, left_tensor, right_tensor, contraction_indices: List[SparseIndex], const_shape=""):
+    def __init__(self, left_tensor, right_tensor, contraction_indices: List[SparseIndex], shape = None, base_tensor = None, const_shape=""):
         self.name = left_tensor.name + right_tensor.name
         self.shape = set(left_tensor.shape).union(set(right_tensor.shape)).difference(
-            set(contraction_indices))
+            set(contraction_indices)) if shape is None else shape
         self.fused_shape = self.shape
         self.const_shape = const_shape
+        self.base_tensor = base_tensor
 
     def fuse(self, indices: List[SparseIndex]):
-        self.fused_shape = self.shape.difference(set(indices))
+        if type(self.shape) is list:
+            self.fused_shape = set(self.shape).difference(set(indices))
+        else:
+            self.fused_shape = self.shape.difference(set(indices))
 
     def get_varname(self):
         return self.name
@@ -203,6 +242,8 @@ class NaryContraction:
 
     def validate(self):
         assert len(self.rhs) >= 1
+        for op in self.rhs:
+            assert isinstance(op, TensorRef)
         return self._shape_check()
 
     def _make_contraction_map(self):
@@ -266,7 +307,7 @@ class NaryContraction:
                     dependence_edges.append((ind, ind_second))
         return dependence_edges
 
-    def fuse_loops(self, workspace=True):
+    def fuse_loops(self, tensors_to_fuse, workspace=True):
         if not self.is_binarized():
             self.binarize()
         index_map = {}
@@ -277,9 +318,9 @@ class NaryContraction:
         for thresh in range(1, 5):
             try:
                 next(run_solver(self.statements, [contr.get_loop_ids() for contr in self.statements], self.opdag(), [
-                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh, workspace))
+                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh, workspace, tensors_to_fuse))
                 return run_solver(self.statements, [contr.get_loop_ids() for contr in self.statements], self.opdag(), [
-                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh, workspace, do_print=True)
+                    contr.get_lhs_shape_ids() for contr in self.statements], index_map, thresh, workspace, tensors_to_fuse)
             except SolverError as _:
                 print(f"Did not work for {thresh}")
                 continue

@@ -52,7 +52,7 @@ def make_intvar(name):
     return Int(name)
 #indices is set of loops surrounding each statement, really the hash values of SparseIndexs
 #indices_id_map is a dict{index_hash: SparseIndex}
-def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_threshold, workspace, do_print = False):
+def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_threshold, workspace, tensors_to_fuse, do_print = False):
     import time
     start = time.time()
     make_intvar.count = 0
@@ -93,8 +93,43 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
             for ind2 in indxs:
                 if indices_id_map[ind1].get_span() < indices_id_map[ind2].get_span():
                     lpos_order_by_size += [lpos[s][ind1] > lpos[s][ind2]]
+        
+    #lpos_contraction = And(lpos_contraction)
+    #lpos_order_by_size = And(lpos_order_by_size)
 
-    ## Now add constraints for data layout of input tensors.
+    # for every producer-consumer pair, try to reduce intermediate temp to a scalar
+    prod_cons_fusion = []
+    for d in deps:
+        if tensors_to_fuse is not None:
+            if tensors_to_fuse != statements[d[0]].get_lhs():
+                continue
+        #source is producer, target is consumer
+        source = d[0]
+        target = d[1]
+        print("source", source)
+        print("statement at source", statements[source])
+        print("target", target)
+        temp_consistent_ids = list(filter(tensors_to_fuse.get_consistentency_constraint(), out_inds[source]))
+        print("temp_indices", temp_consistent_ids)
+        print("consisten temp_indices", temp_consistent_ids)
+        # make fusion 1 to N
+        fusion_threshold = len(temp_consistent_ids) - (fusion_threshold - 1)
+        # each level in the outermost band
+        for level in range(len(temp_consistent_ids)-(fusion_threshold-1)):
+            # first, certain indices of the temp should be in the outermost position
+            prod_cons_fusion += [Or([lpos[source][temp_consistent_ids[j]]
+                                    == level for j in range(len(temp_consistent_ids))])]
+            # second, they should be the same for the producer and the consumer
+            prod_cons_fusion += [And([Implies(lpos[source][temp_consistent_ids[j]] == level,
+                                     lpos[target][temp_consistent_ids[j]] == level) for j in range(len(temp_consistent_ids))])]
+            # third, all in-between statements must have the temp indices in the same positions
+            for s in range(len(statements)):
+                if (s != source and s != target):
+                    prod_cons_fusion += [Implies(And(spos[source] < spos[s], spos[s] < spos[target]), And([Implies(
+                        lpos[source][temp_consistent_ids[j]] == level, lpos[s][temp_consistent_ids[j]] == level) for j in range(len(temp_consistent_ids))]))]
+        # don't get same permuataion for prod and cons
+
+    # Now add constraints for data layout of input tensors.
     dpos_to_str = {}
     dpos_vars = {}
     dpos_unique = []
@@ -118,8 +153,8 @@ def run_solver(statements:List, indices, deps, out_inds, indices_id_map, fusion_
 
 
     # put it all together
-    all_constraints = spos_depend + spos_range + spos_unique + all_dpos_constraints + \
-            lpos_range + lpos_unique + lpos_absent #+ prod_cons_fusion +all_dpos_constraints + lpos_order_by_size
+    all_constraints = spos_depend + spos_range + spos_unique + \
+            lpos_range + lpos_unique + lpos_absent + prod_cons_fusion + all_dpos_constraints# + lpos_order_by_size
 
     # solve and print
     s = Solver()
